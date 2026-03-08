@@ -22,7 +22,7 @@ export default function Footer() {
           <p className="font-[family-name:var(--font-playfair)] text-[#ff7bac] text-lg font-bold tracking-[0.25em] uppercase mb-2">
             Timotion Studio
           </p>
-          <p className="text-[#c8c8d8]/40 text-xs tracking-wide">
+          <p className="text-[#c8c8d8]/70 text-xs tracking-wide">
             © 2025 Timotion Studio. All Rights Reserved.
           </p>
         </div>
@@ -33,7 +33,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Vimeo"
-            className="text-white/35 hover:text-[#ff7bac] transition-colors duration-300 cursor-pointer"
+            className="text-white/60 hover:text-[#ff7bac] transition-colors duration-300 cursor-pointer"
           >
             <VimeoIcon />
           </a>
@@ -42,7 +42,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
-            className="text-white/35 hover:text-[#ff7bac] transition-colors duration-300 cursor-pointer"
+            className="text-white/60 hover:text-[#ff7bac] transition-colors duration-300 cursor-pointer"
           >
             <InstagramIcon />
           </a>

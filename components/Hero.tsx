@@ -73,7 +73,7 @@ export default function Hero() {
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2" style={{ zIndex: 4 }}>
         <a
           href="#projects"
-          className="text-white/50 text-[10px] tracking-[0.3em] uppercase hover:text-[#ff7bac] transition-colors duration-300 cursor-pointer"
+          className="text-white/60 text-[10px] tracking-[0.3em] uppercase hover:text-[#ff7bac] transition-colors duration-300 cursor-pointer"
         >
           Scroll Down ↓
         </a>

@@ -22,7 +22,7 @@ export default function Contact() {
         <p className="text-[10px] tracking-widest uppercase text-white/50 mb-4">
           Get In Touch
         </p>
-        <h2 className="font-[family-name:var(--font-playfair)] text-3xl md:text-4xl font-bold text-[#ff7bac] mb-4 leading-tight">
+        <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-bold text-[#ff7bac] mb-4 leading-tight">
           Let&apos;s chat & give life some more magic
         </h2>
         <p className="text-[#c8c8d8]/60 text-sm mb-14">

@@ -112,7 +112,7 @@ export default function ProjectsHover() {
           <div>
             <span
               className="block text-[9px] tracking-widest uppercase mb-1.5 transition-colors duration-300"
-              style={{ color: isActive ? "#d4a853" : "rgba(255,255,255,0.28)" }}
+              style={{ color: isActive ? "#d4a853" : "rgba(255,255,255,0.50)" }}
             >
               {p.category}
             </span>
@@ -151,7 +151,7 @@ export default function ProjectsHover() {
         <p className="text-[10px] tracking-widest uppercase text-white/50 text-center mb-3">
           Our Work
         </p>
-        <h2 className="font-[family-name:var(--font-playfair)] text-3xl md:text-4xl text-[#ff7bac] text-center mb-20 font-bold">
+        <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl text-[#ff7bac] text-center mb-20 font-bold">
           Selected Projects
         </h2>
 

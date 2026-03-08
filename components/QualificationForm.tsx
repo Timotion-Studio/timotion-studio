@@ -175,7 +175,7 @@ export default function QualificationForm() {
         <p className="text-[10px] tracking-widest uppercase text-white/50 text-center mb-3">
           Start Your Project
         </p>
-        <h2 className="font-[family-name:var(--font-playfair)] text-3xl md:text-4xl text-[#ff7bac] text-center mb-4 font-bold">
+        <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl text-[#ff7bac] text-center mb-4 font-bold">
           Let&apos;s See If We&apos;re The Right Fit
         </h2>
         <p className="text-[#c8c8d8] text-sm text-center mb-14 leading-relaxed">
@@ -231,7 +231,7 @@ export default function QualificationForm() {
                     </div>
                     <span
                       className="text-[9px] tracking-widest uppercase hidden sm:block"
-                      style={{ color: i + 1 === step ? "#ff7bac" : "rgba(255,255,255,0.25)" }}
+                      style={{ color: i + 1 === step ? "#ff7bac" : "rgba(255,255,255,0.55)" }}
                     >
                       {label}
                     </span>
@@ -252,7 +252,7 @@ export default function QualificationForm() {
               {/* ── Step 1: About You ── */}
               {step === 1 && (
                 <div className="space-y-5">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-xl text-white font-bold mb-6">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6">
                     Tell us about yourself
                   </h3>
 
@@ -300,7 +300,7 @@ export default function QualificationForm() {
               {/* ── Step 2: Project Type ── */}
               {step === 2 && (
                 <div className="space-y-6">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-xl text-white font-bold mb-6">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6">
                     What are you looking for?
                   </h3>
 
@@ -345,7 +345,7 @@ export default function QualificationForm() {
               {/* ── Step 3: Project Details ── */}
               {step === 3 && (
                 <div className="space-y-5">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-xl text-white font-bold mb-6">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6">
                     Tell us about the project
                   </h3>
 
@@ -385,7 +385,7 @@ export default function QualificationForm() {
               {/* ── Step 4: Budget & Wrap-up ── */}
               {step === 4 && (
                 <div className="space-y-6">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-xl text-white font-bold mb-6">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6">
                     Investment & timeline
                   </h3>
 
@@ -451,7 +451,7 @@ export default function QualificationForm() {
                 <button
                   type="button"
                   onClick={() => goTo(step - 1)}
-                  className="text-[10px] tracking-widest uppercase text-white/40 hover:text-white transition-colors duration-200 cursor-pointer"
+                  className="text-[10px] tracking-widest uppercase text-white/60 hover:text-white transition-colors duration-200 cursor-pointer"
                 >
                   ← Back
                 </button>

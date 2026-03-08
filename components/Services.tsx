@@ -59,7 +59,7 @@ export default function Services() {
         <p className="text-[10px] tracking-widest uppercase text-white/50 text-center mb-3">
           Our Services
         </p>
-        <h2 className="font-[family-name:var(--font-playfair)] text-3xl md:text-4xl text-[#ff7bac] text-center mb-14 font-bold">
+        <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl text-[#ff7bac] text-center mb-14 font-bold">
           What We Offer
         </h2>
 
@@ -72,7 +72,7 @@ export default function Services() {
               className={`px-10 py-3 text-[10px] tracking-widest uppercase transition-all duration-300 border cursor-pointer ${
                 active === tab
                   ? "bg-[#d4a853] text-[#000021] border-[#d4a853] font-semibold"
-                  : "bg-transparent text-white/50 border-white/15 hover:text-white hover:border-white/30"
+                  : "bg-transparent text-white/60 border-white/20 hover:text-white hover:border-white/40"
               }`}
             >
               {tab}
@@ -87,7 +87,7 @@ export default function Services() {
               <span className="absolute top-10 right-10 text-[#ff7bac]/15 font-[family-name:var(--font-playfair)] text-5xl font-bold select-none">
                 0{i + 1}
               </span>
-              <h3 className="font-[family-name:var(--font-playfair)] text-xl font-semibold text-white mb-4">
+              <h3 className="font-[family-name:var(--font-playfair)] text-2xl font-semibold text-white mb-4">
                 {service.name}
               </h3>
               <p className="text-[#c8c8d8]/80 text-sm leading-relaxed">

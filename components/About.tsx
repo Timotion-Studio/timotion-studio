@@ -31,7 +31,7 @@ export default function About() {
 
           {/* Text content */}
           <div>
-            <h2 className="font-[family-name:var(--font-playfair)] text-3xl md:text-4xl font-bold text-[#ff7bac] mb-8 leading-tight">
+            <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-bold text-[#ff7bac] mb-8 leading-tight">
               Immortalising moments, creating magic.
             </h2>
             <p className="text-[#c8c8d8] leading-relaxed text-base mb-10">

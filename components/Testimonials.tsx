@@ -28,7 +28,7 @@ export default function Testimonials() {
         <p className="text-[10px] tracking-widest uppercase text-white/50 text-center mb-3">
           Testimonials
         </p>
-        <h2 className="font-[family-name:var(--font-playfair)] text-3xl md:text-4xl text-[#ff7bac] text-center mb-16 font-bold">
+        <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl text-[#ff7bac] text-center mb-16 font-bold">
           Kind Words
         </h2>
 
@@ -48,7 +48,7 @@ export default function Testimonials() {
                 <p className="text-[#d4a853] text-[10px] tracking-widest uppercase font-semibold">
                   {t.client}
                 </p>
-                <p className="text-white/35 text-[10px] tracking-widest uppercase mt-1">
+                <p className="text-white/60 text-[10px] tracking-widest uppercase mt-1">
                   {t.role}
                 </p>
               </div>
