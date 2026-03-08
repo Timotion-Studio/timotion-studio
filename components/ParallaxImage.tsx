@@ -17,9 +17,9 @@ export default function ParallaxImage() {
       const rect = wrapper.getBoundingClientRect();
       const vh = window.innerHeight;
 
-      // progress: 0 = element fully below viewport, 1 = element fully above viewport
-      // we want full open when the element centre hits the viewport centre
-      const entered = (vh - rect.top) / (vh + rect.height);
+      // progress: starts when element is 10% into the viewport from the bottom
+      const triggerPoint = vh * 0.9; // 90% down the viewport = 10% in
+      const entered = (triggerPoint - rect.top) / (triggerPoint + rect.height);
       const progress = Math.max(0, Math.min(1, entered));
 
       // ── Shutter: open from centre outward ─────────────────────────────
