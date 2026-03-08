@@ -14,6 +14,8 @@ function InstagramIcon() {
   );
 }
 
+import ParallaxImage from "@/components/ParallaxImage";
+
 export default function About() {
   return (
     <section id="about" className="py-24 px-6 bg-[#00002e]">
@@ -23,16 +25,8 @@ export default function About() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          {/* Portrait */}
-          <div className="relative">
-            <img
-              src="/timotion-picture.jpg"
-              alt="Timo — Timotion Studio"
-              className="w-full object-cover"
-              style={{ aspectRatio: "3/4" }}
-            />
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 border border-[#ff7bac]/20" />
-          </div>
+          {/* Portrait with parallax */}
+          <ParallaxImage />
 
           {/* Text content */}
           <div>
