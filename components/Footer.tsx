@@ -19,9 +19,12 @@ export default function Footer() {
     <footer className="bg-[#000021] border-t border-[#f0f0f0]/8 py-12 px-6">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="text-center md:text-left">
-          <p className="font-[family-name:var(--font-playfair)] text-[#ff7bac] text-lg font-bold tracking-[0.25em] uppercase mb-2">
-            Timotion Studio
-          </p>
+          <img
+            src="/timotion-logo.png"
+            alt="Timotion Studio"
+            style={{ maxHeight: "40px", width: "auto" }}
+            className="mb-2 mx-auto md:mx-0"
+          />
           <p className="text-[#c8c8d8]/70 text-xs tracking-wide">
             © 2025 Timotion Studio. All Rights Reserved.
           </p>
