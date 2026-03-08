@@ -17,19 +17,21 @@ export default function ParallaxImage() {
       const rect = wrapper.getBoundingClientRect();
       const vh = window.innerHeight;
 
-      // normalised position: 0 = element centre at viewport centre
-      // negative = element below centre, positive = element above centre
-      const norm = 1 - (rect.top + rect.height / 2) / vh;
+      // progress: 0 = element fully below viewport, 1 = element fully above viewport
+      // we want full open when the element centre hits the viewport centre
+      const entered = (vh - rect.top) / (vh + rect.height);
+      const progress = Math.max(0, Math.min(1, entered));
 
-      // ── Parallax: image shifts up as you scroll down ──────────────────
-      // range: –40px (element below vp) → +40px (element above vp)
-      const imgShift = norm * 80;
-      img.style.transform = `translateY(${imgShift}px)`;
+      // ── Shutter: open from centre outward ─────────────────────────────
+      // Both top and bottom clip start at 50% (fully closed) → 0% (fully open)
+      // Use an eased curve so the opening feels snappy
+      const eased = 1 - Math.pow(1 - progress, 2); // ease-out quad
+      const clip = (1 - eased) * 50; // 50% → 0%
+      wrapper.style.clipPath = `inset(${clip}% 0 ${clip}% 0)`;
 
-      // ── Top-clip: shrink the frame from the top as it scrolls up ──────
-      // Only clips once the element starts entering the upper half of vp
-      const clipTop = Math.max(0, norm * 110);
-      wrapper.style.clipPath = `inset(${clipTop}px 0px 0px 0px)`;
+      // ── Subtle parallax on the image inside ───────────────────────────
+      const norm = (rect.top + rect.height / 2) / vh - 0.5; // –0.5 → +0.5
+      img.style.transform = `translateY(${norm * 40}px) scale(1.08)`;
     };
 
     const onScroll = () => {
@@ -38,7 +40,7 @@ export default function ParallaxImage() {
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    update(); // run once on mount
+    update();
 
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -48,12 +50,14 @@ export default function ParallaxImage() {
 
   return (
     <div className="relative">
-      {/* clip wrapper — overflow hidden keeps img scale contained */}
       <div
         ref={wrapperRef}
-        style={{ overflow: "hidden", aspectRatio: "3/4", willChange: "clip-path" }}
+        style={{
+          overflow: "hidden",
+          aspectRatio: "3/4",
+          willChange: "clip-path",
+        }}
       >
-        {/* image is 115% tall so parallax shift never exposes a gap at bottom */}
         <img
           ref={imgRef}
           src="/timotion-picture.jpg"
@@ -61,8 +65,9 @@ export default function ParallaxImage() {
           style={{
             width: "100%",
             height: "115%",
+            marginTop: "-7.5%",
             objectFit: "cover",
-            objectPosition: "center top",
+            objectPosition: "center",
             display: "block",
             willChange: "transform",
           }}
