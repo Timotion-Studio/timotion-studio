@@ -25,10 +25,10 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="py-24 px-6 bg-[#000021]">
       <div className="max-w-6xl mx-auto">
-        <p className="text-[10px] tracking-widest uppercase text-white/50 text-center mb-3">
+        <p className="text-sm tracking-[0.3em] uppercase text-white/60 text-center mb-3">
           Testimonials
         </p>
-        <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl text-[#ff7bac] text-center mb-16 font-bold">
+        <h2 className="font-[family-name:var(--font-playfair)] text-5xl md:text-6xl text-[#ff7bac] text-center mb-16 font-bold leading-[1.2] tracking-wide">
           Kind Words
         </h2>
 
@@ -40,12 +40,12 @@ export default function Testimonials() {
             >
               <div>
                 <QuoteIcon />
-                <blockquote className="font-[family-name:var(--font-playfair)] text-lg italic text-white leading-relaxed">
+                <blockquote className="font-[family-name:var(--font-playfair)] text-xl italic text-white leading-relaxed">
                   {t.quote}
                 </blockquote>
               </div>
               <div className="mt-10 pt-6 border-t border-white/10">
-                <p className="text-[#d4a853] text-[10px] tracking-widest uppercase font-semibold">
+                <p className="text-[#ff7bac] text-[10px] tracking-widest uppercase font-semibold">
                   {t.client}
                 </p>
                 <p className="text-white/60 text-[10px] tracking-widest uppercase mt-1">

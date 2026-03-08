@@ -18,23 +18,28 @@ export default function About() {
   return (
     <section id="about" className="py-24 px-6 bg-[#00002e]">
       <div className="max-w-6xl mx-auto">
-        <p className="text-[10px] tracking-widest uppercase text-white/50 text-center mb-16">
+        <p className="text-sm tracking-[0.3em] uppercase text-white/60 text-center mb-16">
           About Timotion
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          {/* Placeholder image */}
+          {/* Portrait */}
           <div className="relative">
-            <div className="aspect-[3/4] bg-gradient-to-b from-[#0a0a40] to-[#000021] w-full" />
+            <img
+              src="/timotion-picture.jpg"
+              alt="Timo — Timotion Studio"
+              className="w-full object-cover"
+              style={{ aspectRatio: "3/4" }}
+            />
             <div className="absolute -bottom-4 -right-4 w-24 h-24 border border-[#ff7bac]/20" />
           </div>
 
           {/* Text content */}
           <div>
-            <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-bold text-[#ff7bac] mb-8 leading-tight">
+            <h2 className="font-[family-name:var(--font-playfair)] text-5xl md:text-6xl font-bold text-[#ff7bac] mb-8 leading-[1.2] tracking-wide">
               Immortalising moments, creating magic.
             </h2>
-            <p className="text-[#c8c8d8] leading-relaxed text-base mb-10">
+            <p className="text-[#c8c8d8] leading-relaxed text-lg mb-10">
               Immortalising moments, creating magic & having a great time while
               doing so — that&apos;s what Timotion Studio is all about. We offer a
               tailored photo and videography service for events, fashion,
@@ -52,7 +57,7 @@ export default function About() {
                 Vimeo
               </a>
               <a
-                href="https://instagram.com/timotion.studio"
+                href="https://instagram.com/timotion.mp4"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-white/50 hover:text-[#ff7bac] transition-colors duration-300 text-[10px] tracking-widest uppercase cursor-pointer"

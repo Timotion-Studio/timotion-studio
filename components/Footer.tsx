@@ -38,7 +38,7 @@ export default function Footer() {
             <VimeoIcon />
           </a>
           <a
-            href="https://instagram.com/timotion.studio"
+            href="https://instagram.com/timotion.mp4"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"

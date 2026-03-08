@@ -45,11 +45,7 @@ export default function Hero() {
 
       {/* ── Content ── */}
       <div className="relative max-w-5xl mx-auto" style={{ zIndex: 4 }}>
-        <p className="text-[#d4a853] text-[10px] tracking-[0.5em] uppercase mb-10 font-light">
-          emotion &nbsp;&nbsp;|&nbsp;&nbsp; magic &nbsp;&nbsp;|&nbsp;&nbsp; art
-        </p>
-
-        <h1 className="font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#ff7bac] leading-[1.1] mb-12">
+        <h1 className="font-[family-name:var(--font-playfair)] text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#ff7bac] leading-[1.15] tracking-wide mb-12">
           Picture-Perfect Moments: Exceptional Photography & Cinematic Films
         </h1>
 

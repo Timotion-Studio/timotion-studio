@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
-const links = ["Projects", "Services", "Testimonials", "Contact", "Qualify"] as const;
+const links = ["Projects", "Services", "Testimonials", "Qualify"] as const;
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -22,12 +23,13 @@ export default function Nav() {
     >
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         {/* Logo */}
-        <a
-          href="#"
-          className="text-[#ff7bac] font-[family-name:var(--font-playfair)] text-lg font-bold tracking-[0.25em] uppercase hover:text-[#d4a853] transition-colors duration-300"
-        >
-          TIMOTION
-        </a>
+        <Link href="/" className="flex items-center shrink-0">
+          <img
+            src="/timotion-logo.png"
+            alt="Timotion Studio"
+            style={{ maxHeight: "48px", width: "auto" }}
+          />
+        </Link>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-10">
@@ -40,6 +42,12 @@ export default function Nav() {
               {item}
             </a>
           ))}
+          <Link
+            href="/contact"
+            className="text-white/70 text-[10px] tracking-widest uppercase hover:text-[#ff7bac] transition-colors duration-300"
+          >
+            Contact
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
@@ -71,6 +79,13 @@ export default function Nav() {
               {item}
             </a>
           ))}
+          <Link
+            href="/contact"
+            onClick={() => setMenuOpen(false)}
+            className="text-white/70 text-xs tracking-widest uppercase hover:text-[#ff7bac] transition-colors"
+          >
+            Contact
+          </Link>
         </div>
       )}
     </nav>

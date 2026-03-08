@@ -60,7 +60,7 @@ function OptionCard({
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-white text-sm font-medium">{label}</p>
+          <p className="text-white text-base font-medium">{label}</p>
           {sublabel && <p className="text-[#c8c8d8]/60 text-xs mt-0.5">{sublabel}</p>}
         </div>
         <div
@@ -120,7 +120,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 const inputCls =
-  "w-full bg-[#00002e] border border-white/10 text-white placeholder-white/20 px-5 py-3.5 text-sm focus:outline-none focus:border-[#ff7bac] transition-colors duration-300";
+  "w-full bg-[#00002e] border border-white/10 text-white placeholder-white/20 px-5 py-3.5 text-base focus:outline-none focus:border-[#ff7bac] transition-colors duration-300";
 
 export default function QualificationForm() {
   const [step, setStep] = useState(1);
@@ -172,13 +172,13 @@ export default function QualificationForm() {
     <section id="qualify" className="py-24 px-6 bg-[#00002e]">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <p className="text-[10px] tracking-widest uppercase text-white/50 text-center mb-3">
+        <p className="text-sm tracking-[0.3em] uppercase text-white/60 text-center mb-3">
           Start Your Project
         </p>
-        <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl text-[#ff7bac] text-center mb-4 font-bold">
+        <h2 className="font-[family-name:var(--font-playfair)] text-5xl md:text-6xl text-[#ff7bac] text-center mb-4 font-bold leading-[1.2] tracking-wide">
           Let&apos;s See If We&apos;re The Right Fit
         </h2>
-        <p className="text-[#c8c8d8] text-sm text-center mb-14 leading-relaxed">
+        <p className="text-[#c8c8d8] text-base text-center mb-14 leading-relaxed">
           A few quick questions to understand your vision and make sure we can deliver something you&apos;ll love.
         </p>
 
@@ -195,7 +195,7 @@ export default function QualificationForm() {
             <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-3">
               Thank you, {data.name.split(" ")[0]}.
             </h3>
-            <p className="text-[#c8c8d8] text-sm">
+            <p className="text-[#c8c8d8] text-base">
               We&apos;ll review your brief and be in touch within 48 hours.
             </p>
           </div>
@@ -252,7 +252,7 @@ export default function QualificationForm() {
               {/* ── Step 1: About You ── */}
               {step === 1 && (
                 <div className="space-y-5">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6 leading-[1.2] tracking-wide">
                     Tell us about yourself
                   </h3>
 
@@ -300,7 +300,7 @@ export default function QualificationForm() {
               {/* ── Step 2: Project Type ── */}
               {step === 2 && (
                 <div className="space-y-6">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6 leading-[1.2] tracking-wide">
                     What are you looking for?
                   </h3>
 
@@ -345,7 +345,7 @@ export default function QualificationForm() {
               {/* ── Step 3: Project Details ── */}
               {step === 3 && (
                 <div className="space-y-5">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6 leading-[1.2] tracking-wide">
                     Tell us about the project
                   </h3>
 
@@ -385,7 +385,7 @@ export default function QualificationForm() {
               {/* ── Step 4: Budget & Wrap-up ── */}
               {step === 4 && (
                 <div className="space-y-6">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6 leading-[1.2] tracking-wide">
                     Investment & timeline
                   </h3>
 

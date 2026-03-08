@@ -55,7 +55,7 @@ function ProjectCard({
       {/* Thumbnail placeholder */}
       <div className="aspect-video bg-gradient-to-br from-[#0a0a40] to-[#000021] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-[120%] h-px bg-gradient-to-l from-[#d4a853] to-transparent rotate-12 translate-y-20" />
+          <div className="absolute top-0 right-0 w-[120%] h-px bg-gradient-to-l from-[#ff7bac] to-transparent rotate-12 translate-y-20" />
         </div>
         {href && (
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -71,7 +71,7 @@ function ProjectCard({
 
       {/* Card info */}
       <div className="px-6 py-5 border-t border-white/5">
-        <p className="text-[#d4a853] text-[10px] tracking-widest uppercase mb-2">{category}</p>
+        <p className="text-[#ff7bac] text-[10px] tracking-widest uppercase mb-2">{category}</p>
         <h3 className="text-white font-[family-name:var(--font-playfair)] text-xl font-semibold capitalize">
           {title}
         </h3>

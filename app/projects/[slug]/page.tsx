@@ -97,13 +97,13 @@ export default async function ProjectPage(props: {
         <div className="max-w-6xl mx-auto px-6 pt-10 pb-12 border-b border-white/[0.07]">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
-              <p className="text-[#d4a853] text-[10px] tracking-widest uppercase mb-3">
+              <p className="text-[#ff7bac] text-sm tracking-[0.3em] uppercase mb-3">
                 {project.category}
               </p>
-              <h1 className="font-[family-name:var(--font-playfair)] text-4xl md:text-6xl font-bold text-[#ff7bac] leading-tight capitalize">
+              <h1 className="font-[family-name:var(--font-playfair)] text-5xl md:text-7xl font-bold text-[#ff7bac] leading-[1.15] tracking-wide capitalize">
                 {project.title}
               </h1>
-              <p className="text-white/50 text-base mt-3 font-[family-name:var(--font-playfair)] italic">
+              <p className="text-white/50 text-lg mt-3 font-[family-name:var(--font-playfair)] italic">
                 {project.tagline}
               </p>
             </div>
@@ -136,7 +136,7 @@ export default async function ProjectPage(props: {
               </span>
               <div className="flex-1 h-px bg-white/[0.07]" />
             </div>
-            <p className="text-[#c8c8d8] text-base leading-[1.9] font-light">
+            <p className="text-[#c8c8d8] text-lg leading-[1.9] font-light">
               {project.scope}
             </p>
           </div>
@@ -152,7 +152,7 @@ export default async function ProjectPage(props: {
               </span>
               <div className="flex-1 h-px bg-white/[0.07]" />
             </div>
-            <p className="text-[#c8c8d8] text-base leading-[1.9] font-light">
+            <p className="text-[#c8c8d8] text-lg leading-[1.9] font-light">
               {project.process}
             </p>
           </div>
@@ -168,7 +168,7 @@ export default async function ProjectPage(props: {
               </span>
               <div className="flex-1 h-px bg-white/[0.07]" />
             </div>
-            <p className="text-[#c8c8d8] text-base leading-[1.9] font-light">
+            <p className="text-[#c8c8d8] text-lg leading-[1.9] font-light">
               {project.result}
             </p>
           </div>
@@ -184,11 +184,11 @@ export default async function ProjectPage(props: {
               >
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
               </svg>
-              <blockquote className="font-[family-name:var(--font-playfair)] text-xl md:text-2xl italic text-white leading-relaxed mb-8">
+              <blockquote className="font-[family-name:var(--font-playfair)] text-2xl md:text-3xl italic text-white leading-relaxed mb-8">
                 &ldquo;{project.testimonial.quote}&rdquo;
               </blockquote>
               <div className="border-t border-white/[0.08] pt-6">
-                <p className="text-[#d4a853] text-[10px] tracking-widest uppercase font-semibold">
+                <p className="text-[#ff7bac] text-[10px] tracking-widest uppercase font-semibold">
                   {project.testimonial.author}
                 </p>
                 <p className="text-white/60 text-[10px] tracking-widest uppercase mt-1">
@@ -212,7 +212,7 @@ export default async function ProjectPage(props: {
                 <span className="text-[9px] tracking-widest uppercase text-white/60 group-hover:text-[#ff7bac] transition-colors duration-300">
                   ← Previous
                 </span>
-                <span className="text-[10px] tracking-widest uppercase text-[#d4a853]">
+                <span className="text-[10px] tracking-widest uppercase text-[#ff7bac]">
                   {prev.category}
                 </span>
                 <span className="font-[family-name:var(--font-playfair)] text-xl font-bold text-white/70 group-hover:text-white capitalize transition-colors duration-300">
@@ -231,7 +231,7 @@ export default async function ProjectPage(props: {
                 <span className="text-[9px] tracking-widest uppercase text-white/60 group-hover:text-[#ff7bac] transition-colors duration-300">
                   Next →
                 </span>
-                <span className="text-[10px] tracking-widest uppercase text-[#d4a853]">
+                <span className="text-[10px] tracking-widest uppercase text-[#ff7bac]">
                   {next.category}
                 </span>
                 <span className="font-[family-name:var(--font-playfair)] text-xl font-bold text-white/70 group-hover:text-white capitalize transition-colors duration-300">
