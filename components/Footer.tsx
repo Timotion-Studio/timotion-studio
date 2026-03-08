@@ -26,7 +26,7 @@ export default function Footer() {
             className="mb-2 mx-auto md:mx-0"
           />
           <p className="text-[#c8c8d8]/70 text-xs tracking-wide">
-            © 2025 Timotion Studio. All Rights Reserved.
+            © 2026 Timotion Studio. All Rights Reserved.
           </p>
         </div>
 
