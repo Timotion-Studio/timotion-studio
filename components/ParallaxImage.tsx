@@ -74,8 +74,6 @@ export default function ParallaxImage() {
         />
       </div>
 
-      {/* decorative corner accent */}
-      <div className="absolute -bottom-4 -right-4 w-24 h-24 border border-[#ff7bac]/20 pointer-events-none" />
     </div>
   );
 }
