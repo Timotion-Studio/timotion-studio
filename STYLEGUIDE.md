@@ -2,6 +2,16 @@
 
 Living design reference for the Timotion Studio website. All decisions documented here are derived from the implemented codebase and should be treated as the source of truth for any new design or development work.
 
+### AI image generation tooling
+
+Placeholder and reference images for the site can be generated using **nano-variations**, installed globally at `~/tools/nano-variations.sh`:
+
+```bash
+nano-variations "prompt describing the image" -n 3 -a 16:9 -s 2K
+```
+
+Options: `-n` number of variations (default 3) · `-a` aspect ratio · `-s` size (512, 1K, 2K, 4K) · `-m` model (flash / pro). Output is saved automatically to a timestamped subfolder inside `media/`. Requires a Gemini API key with image generation enabled at `~/.nano-banana/.env`.
+
 ---
 
 ## 1. Brand Identity

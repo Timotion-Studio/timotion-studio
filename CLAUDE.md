@@ -57,6 +57,26 @@ Avoid inline `animation:` style props — use CSS classes defined in `globals.cs
 
 SVG animations use SMIL (`<animate>`) rather than CSS `clip-path: inset()`, which doesn't work on SVG elements.
 
+### Design reference
+
+`STYLEGUIDE.md` in the project root is the living design styleguide — colors, typography, spacing, component behaviour, animation rules, and design constraints. Read it before making visual changes.
+
+### AI image generation
+
+Two tools are installed globally for generating placeholder and reference images:
+
+**nano-banana** — single image generation via Gemini image models:
+```bash
+~/.bun/bin/bun run ~/tools/nano-banana-2/src/cli.ts "prompt" -a 16:9 -s 1K -o media/filename
+```
+Always `cd` into the target directory first (or use a relative output path from within it) — the CLI resolves `-o` relative to its working directory, not as an absolute path.
+
+**nano-variations** — batch variation generator, saves to `media/<slug-timestamp>/variation-N.png`:
+```bash
+nano-variations "prompt" -n 3 -a 16:9 -s 1K
+```
+Script lives at `~/tools/nano-variations.sh`. API key is read from `~/.nano-banana/.env`. Both tools require a Gemini API key with image generation enabled (paid tier).
+
 ### Notable components
 
 - **`VinylPlayer.tsx`** — fixed bottom-right easter egg, three-layer SVG structure (spinning disc / cyan hover overlay / play-pause icon). Audio via `new Audio()`. CSS classes: `.vinyl-btn`, `.vinyl-disc-spinning`, `.vinyl-cyan-overlay`, `.vinyl-icon`.
