@@ -60,8 +60,8 @@ function OptionCard({
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-white text-base font-medium">{label}</p>
-          {sublabel && <p className="text-[#c8c8d8]/60 text-xs mt-0.5">{sublabel}</p>}
+          <p className="text-white text-xl font-medium">{label}</p>
+          {sublabel && <p className="text-[#c8c8d8]/60 text-sm mt-0.5">{sublabel}</p>}
         </div>
         <div
           className="w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ml-4 transition-all duration-200"
@@ -95,7 +95,7 @@ function PillOption({
     <button
       type="button"
       onClick={onClick}
-      className="px-4 py-2.5 border text-xs tracking-widest uppercase transition-all duration-200 cursor-pointer"
+      className="px-4 py-2.5 border text-sm tracking-widest uppercase transition-all duration-200 cursor-pointer"
       style={{
         background: selected ? "rgba(255,123,172,0.12)" : "transparent",
         borderColor: selected ? "#ff7bac" : "rgba(255,255,255,0.15)",
@@ -111,7 +111,7 @@ function PillOption({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="block text-[10px] tracking-widest uppercase text-white/50 mb-2">
+      <label className="block text-sm tracking-widest uppercase text-white/50 mb-2">
         {label}
       </label>
       {children}
@@ -230,7 +230,7 @@ export default function QualificationForm() {
                       )}
                     </div>
                     <span
-                      className="text-[9px] tracking-widest uppercase hidden sm:block"
+                      className="text-[10px] tracking-widest uppercase hidden sm:block"
                       style={{ color: i + 1 === step ? "#ff7bac" : "rgba(255,255,255,0.55)" }}
                     >
                       {label}
@@ -320,14 +320,12 @@ export default function QualificationForm() {
                   <Field label="Project Category — select all that apply">
                     <div className="flex flex-wrap gap-2">
                       {[
-                        "Event",
-                        "Fashion",
-                        "Wedding",
-                        "Short Film",
-                        "Commercial",
-                        "Music Video",
+                        "Brand Photos",
+                        "Event Photos",
+                        "Commercial Photos",
                         "Brand Video",
-                        "Model Portfolio",
+                        "Commercial",
+                        "Event Videography",
                         "Other",
                       ].map((t) => (
                         <PillOption
@@ -451,7 +449,7 @@ export default function QualificationForm() {
                 <button
                   type="button"
                   onClick={() => goTo(step - 1)}
-                  className="text-[10px] tracking-widest uppercase text-white/60 hover:text-white transition-colors duration-200 cursor-pointer"
+                  className="text-sm tracking-widest uppercase text-white/60 hover:text-white transition-colors duration-200 cursor-pointer"
                 >
                   ← Back
                 </button>
@@ -485,7 +483,7 @@ export default function QualificationForm() {
             </div>
 
             {/* Step counter */}
-            <p className="text-center text-[9px] tracking-widest uppercase text-white/20 mt-5">
+            <p className="text-center text-[10px] tracking-widest uppercase text-white/20 mt-5">
               Step {step} of {TOTAL_STEPS}
             </p>
           </>

@@ -36,61 +36,103 @@ export default async function ProjectPage(props: {
 
       {/* ── Hero: Video or Photo placeholder ── */}
       <section className="pt-20 bg-[#000021]">
-        <div className="max-w-6xl mx-auto px-6 pt-12 pb-0">
-          {project.vimeoId ? (
-            /* Vimeo embed */
-            <div
-              className="w-full relative"
-              style={{ paddingBottom: "56.25%" }}
-            >
-              <iframe
-                src={`https://player.vimeo.com/video/${project.vimeoId}?badge=0&autopause=0&player_id=0&app_id=58479&color=ff7bac&title=0&byline=0&portrait=0`}
-                title={project.title}
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  border: "none",
-                }}
-              />
+        <div className="max-w-7xl mx-auto px-4 pt-12 pb-0">
+
+          {/* ── Desktop: prev | video | next ── */}
+          <div className="hidden md:flex items-center gap-6">
+
+            {/* Prev */}
+            <div className="shrink-0 w-52">
+              {prev ? (
+                <Link
+                  href={`/projects/${prev.slug}`}
+                  className="group flex flex-col gap-3 hover:bg-white/[0.02] transition-colors duration-300 p-4 -m-4"
+                >
+                  <span className="text-xs tracking-widest uppercase text-white/60 group-hover:text-[#ff7bac] transition-colors duration-300">
+                    ← Previous
+                  </span>
+                  <span className="text-xs tracking-widest uppercase text-[#ff7bac]">
+                    {prev.category}
+                  </span>
+                  <span className="font-[family-name:var(--font-playfair)] text-xl font-bold text-white/70 group-hover:text-white capitalize transition-colors duration-300 leading-snug">
+                    {prev.title}
+                  </span>
+                </Link>
+              ) : <div />}
             </div>
-          ) : (
-            /* Photo placeholder grid */
-            <div className="w-full">
+
+            {/* Video */}
+            <div className="flex-1 min-w-0">
+              {project.vimeoId ? (
+                <div className="w-full relative" style={{ paddingBottom: "56.25%" }}>
+                  <iframe
+                    src={`https://player.vimeo.com/video/${project.vimeoId}?badge=0&autopause=0&player_id=0&app_id=58479&color=ff7bac&title=0&byline=0&portrait=0`}
+                    title={project.title}
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+                  />
+                </div>
+              ) : (
+                <div className="grid grid-cols-3 gap-1.5">
+                  {[...Array(6)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`${i === 0 ? "col-span-2 row-span-2" : ""}`}
+                      style={{ aspectRatio: i === 0 ? "16/9" : "4/3", background: `linear-gradient(${135 + i * 20}deg, ${project.bg1}, ${project.bg2})`, position: "relative", overflow: "hidden" }}
+                    >
+                      <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.05) 3px, rgba(255,255,255,0.05) 4px)" }} />
+                      {i === 0 && <div className="absolute inset-0 flex items-center justify-center"><span className="text-white/20 text-[10px] tracking-widest uppercase">Photo Gallery</span></div>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Next */}
+            <div className="shrink-0 w-52">
+              {next ? (
+                <Link
+                  href={`/projects/${next.slug}`}
+                  className="group flex flex-col gap-3 items-end text-right hover:bg-white/[0.02] transition-colors duration-300 p-4 -m-4"
+                >
+                  <span className="text-xs tracking-widest uppercase text-white/60 group-hover:text-[#ff7bac] transition-colors duration-300">
+                    Next →
+                  </span>
+                  <span className="text-xs tracking-widest uppercase text-[#ff7bac]">
+                    {next.category}
+                  </span>
+                  <span className="font-[family-name:var(--font-playfair)] text-xl font-bold text-white/70 group-hover:text-white capitalize transition-colors duration-300 leading-snug">
+                    {next.title}
+                  </span>
+                </Link>
+              ) : <div />}
+            </div>
+
+          </div>
+
+          {/* ── Mobile: video full-width ── */}
+          <div className="md:hidden">
+            {project.vimeoId ? (
+              <div className="w-full relative" style={{ paddingBottom: "56.25%" }}>
+                <iframe
+                  src={`https://player.vimeo.com/video/${project.vimeoId}?badge=0&autopause=0&player_id=0&app_id=58479&color=ff7bac&title=0&byline=0&portrait=0`}
+                  title={project.title}
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+                />
+              </div>
+            ) : (
               <div className="grid grid-cols-3 gap-1.5">
                 {[...Array(6)].map((_, i) => (
-                  <div
-                    key={i}
-                    className={`${i === 0 ? "col-span-2 row-span-2" : ""}`}
-                    style={{
-                      aspectRatio: i === 0 ? "16/9" : "4/3",
-                      background: `linear-gradient(${135 + i * 20}deg, ${project.bg1}, ${project.bg2})`,
-                      position: "relative",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <div
-                      className="absolute inset-0 opacity-[0.06]"
-                      style={{
-                        backgroundImage:
-                          "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.05) 3px, rgba(255,255,255,0.05) 4px)",
-                      }}
-                    />
-                    {i === 0 && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-white/20 text-[10px] tracking-widest uppercase">
-                          Photo Gallery
-                        </span>
-                      </div>
-                    )}
+                  <div key={i} className={`${i === 0 ? "col-span-2 row-span-2" : ""}`} style={{ aspectRatio: i === 0 ? "16/9" : "4/3", background: `linear-gradient(${135 + i * 20}deg, ${project.bg1}, ${project.bg2})`, position: "relative", overflow: "hidden" }}>
+                    <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.05) 3px, rgba(255,255,255,0.05) 4px)" }} />
+                    {i === 0 && <div className="absolute inset-0 flex items-center justify-center"><span className="text-white/20 text-[10px] tracking-widest uppercase">Photo Gallery</span></div>}
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
+          </div>
+
         </div>
 
         {/* Project title bar */}
@@ -199,51 +241,6 @@ export default async function ProjectPage(props: {
           )}
         </div>
       </section>
-
-      {/* ── Prev / Next navigation ── */}
-      <nav className="border-t border-white/[0.07] bg-[#000021]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2">
-            {prev ? (
-              <Link
-                href={`/projects/${prev.slug}`}
-                className="group py-10 pr-8 border-r border-white/[0.07] flex flex-col gap-2 hover:bg-white/[0.02] transition-colors duration-300"
-              >
-                <span className="text-[9px] tracking-widest uppercase text-white/60 group-hover:text-[#ff7bac] transition-colors duration-300">
-                  ← Previous
-                </span>
-                <span className="text-[10px] tracking-widest uppercase text-[#ff7bac]">
-                  {prev.category}
-                </span>
-                <span className="font-[family-name:var(--font-playfair)] text-xl font-bold text-white/70 group-hover:text-white capitalize transition-colors duration-300">
-                  {prev.title}
-                </span>
-              </Link>
-            ) : (
-              <div />
-            )}
-
-            {next ? (
-              <Link
-                href={`/projects/${next.slug}`}
-                className="group py-10 pl-8 flex flex-col gap-2 items-end text-right hover:bg-white/[0.02] transition-colors duration-300"
-              >
-                <span className="text-[9px] tracking-widest uppercase text-white/60 group-hover:text-[#ff7bac] transition-colors duration-300">
-                  Next →
-                </span>
-                <span className="text-[10px] tracking-widest uppercase text-[#ff7bac]">
-                  {next.category}
-                </span>
-                <span className="font-[family-name:var(--font-playfair)] text-xl font-bold text-white/70 group-hover:text-white capitalize transition-colors duration-300">
-                  {next.title}
-                </span>
-              </Link>
-            ) : (
-              <div />
-            )}
-          </div>
-        </div>
-      </nav>
 
       {/* Back to all work */}
       <div className="bg-[#000021] py-8 px-6 text-center border-t border-white/[0.04]">

@@ -101,7 +101,7 @@ export default function ProjectsHover() {
   const active = hovered !== null ? projects[hovered] : null;
 
   return (
-    <section id="projects" className="py-24 px-6 bg-[#000021]">
+    <section id="projects" className="px-6 pt-40 pb-24 bg-[#0B0C1A]" style={{ marginTop: 0 }}>
       <div className="max-w-6xl mx-auto">
         <p className="text-sm tracking-[0.3em] uppercase text-white/60 text-center mb-3">
           Our Work
@@ -148,16 +148,12 @@ export default function ProjectsHover() {
                         {p.category}
                       </span>
                       <h3
-                        className="font-[family-name:var(--font-playfair)] font-bold text-2xl sm:text-4xl md:text-5xl leading-none"
+                        className={`project-title font-[family-name:var(--font-playfair)] font-bold text-2xl sm:text-4xl md:text-5xl leading-none${isActive ? " active" : ""}`}
                         style={{
                           letterSpacing: "0.08em",
-                          color: isActive
-                            ? "#ffffff"
-                            : "rgba(255,255,255,0.55)",
                           transform: isActive
                             ? "translateX(10px)"
                             : "translateX(0)",
-                          transition: "color 0.3s ease, transform 0.3s ease",
                         }}
                       >
                         {p.name}

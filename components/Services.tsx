@@ -1,57 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { getServicesByCategory } from "@/lib/services";
 
 type Tab = "Photography" | "Videography";
 
-const services: Record<Tab, { name: string; description: string }[]> = {
-  Photography: [
-    {
-      name: "Event",
-      description:
-        "We capture the greatest moments of your next festival & exclusive club night.",
-    },
-    {
-      name: "Fashion",
-      description:
-        "Shooting your new brand or established collection drop. We've got you.",
-    },
-    {
-      name: "Model Portfolio",
-      description:
-        "Keep your book up to date to look your best self and get booked.",
-    },
-    {
-      name: "Wedding",
-      description:
-        "One of the best days of your life deserves the best pictures.",
-    },
-  ],
-  Videography: [
-    {
-      name: "Brand Video",
-      description:
-        "A video tailored to your brand is paramount for your image.",
-    },
-    {
-      name: "Commercial",
-      description:
-        "Creative approach that speaks to your audience and grows your sales.",
-    },
-    {
-      name: "Music Video",
-      description: "Create that next level clip for your new single.",
-    },
-    {
-      name: "Wedding Film",
-      description:
-        "Capture and relive those beautiful moments again and again.",
-    },
-  ],
-};
-
 export default function Services() {
   const [active, setActive] = useState<Tab>("Photography");
+
+  const currentServices = getServicesByCategory(active);
 
   return (
     <section id="services" className="py-24 px-6 bg-[#00002e]">
@@ -81,19 +39,26 @@ export default function Services() {
         </div>
 
         {/* Service cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#f0f0f0]/5">
-          {services[active].map((service, i) => (
-            <div key={service.name} className="bg-[#00002e] p-10 relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#f0f0f0]/5">
+          {currentServices.map((service, i) => (
+            <Link
+              key={service.slug}
+              href={`/services/${service.slug}`}
+              className="group bg-[#00002e] p-10 relative hover:bg-[#000035] transition-colors duration-300 block"
+            >
               <span className="absolute top-10 right-10 text-[#ff7bac]/15 font-[family-name:var(--font-playfair)] text-5xl font-bold select-none">
                 0{i + 1}
               </span>
-              <h3 className="font-[family-name:var(--font-playfair)] text-3xl font-semibold text-white mb-4 leading-[1.2] tracking-wide">
+              <h3 className="font-[family-name:var(--font-playfair)] text-2xl font-semibold text-white mb-4 leading-[1.2] tracking-wide group-hover:text-[#ff7bac] transition-colors duration-300">
                 {service.name}
               </h3>
-              <p className="text-[#c8c8d8]/80 text-base leading-relaxed">
-                {service.description}
+              <p className="text-[#c8c8d8]/80 text-sm leading-relaxed mb-6">
+                {service.tagline}
               </p>
-            </div>
+              <span className="text-[9px] tracking-widest uppercase text-[#ff7bac]/60 group-hover:text-[#ff7bac] transition-colors duration-300">
+                Learn more →
+              </span>
+            </Link>
           ))}
         </div>
       </div>

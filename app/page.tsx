@@ -6,6 +6,7 @@ import Testimonials from "@/components/Testimonials";
 import About from "@/components/About";
 import QualificationForm from "@/components/QualificationForm";
 import Footer from "@/components/Footer";
+import VinylPlayer from "@/components/VinylPlayer";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <About />
       <QualificationForm />
       <Footer />
+      <VinylPlayer />
     </main>
   );
 }

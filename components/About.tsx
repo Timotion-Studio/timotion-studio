@@ -36,8 +36,7 @@ export default function About() {
             <p className="text-[#c8c8d8] leading-relaxed text-lg mb-10">
               Immortalising moments, creating magic & having a great time while
               doing so — that&apos;s what Timotion Studio is all about. We offer a
-              tailored photo and videography service for events, fashion,
-              weddings, and film.
+              tailored photo and videography service for events, fashion, and film.
             </p>
 
             <div className="flex gap-8">

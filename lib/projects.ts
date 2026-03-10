@@ -19,6 +19,7 @@ export interface Project {
   bg2: string;
   prev: string;
   next: string;
+  serviceTypes: string[];
 }
 
 export const projects: Project[] = [
@@ -42,6 +43,7 @@ export const projects: Project[] = [
     bg2: "#000021",
     prev: "concrete-desert",
     next: "sun-wine-laughter",
+    serviceTypes: ["brand-videos"],
   },
   {
     slug: "sun-wine-laughter",
@@ -68,6 +70,7 @@ export const projects: Project[] = [
     bg2: "#000021",
     prev: "iberoafrican",
     next: "the-gift",
+    serviceTypes: ["event-videography"],
   },
   {
     slug: "the-gift",
@@ -94,6 +97,7 @@ export const projects: Project[] = [
     bg2: "#000021",
     prev: "sun-wine-laughter",
     next: "the-kraken",
+    serviceTypes: [],
   },
   {
     slug: "the-kraken",
@@ -120,6 +124,7 @@ export const projects: Project[] = [
     bg2: "#000021",
     prev: "the-gift",
     next: "power-of-one-team",
+    serviceTypes: ["event-videography"],
   },
   {
     slug: "power-of-one-team",
@@ -146,6 +151,7 @@ export const projects: Project[] = [
     bg2: "#000021",
     prev: "the-kraken",
     next: "concrete-desert",
+    serviceTypes: ["event-photos"],
   },
   {
     slug: "concrete-desert",
@@ -167,6 +173,7 @@ export const projects: Project[] = [
     bg2: "#000021",
     prev: "power-of-one-team",
     next: "iberoafrican",
+    serviceTypes: ["commercial-photos"],
   },
 ];
 
@@ -176,6 +183,10 @@ export function getAllProjects(): Project[] {
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
+}
+
+export function getProjectsByService(serviceSlug: string): Project[] {
+  return projects.filter((p) => p.serviceTypes.includes(serviceSlug));
 }
 
 export function getAdjacentProjects(slug: string): {
