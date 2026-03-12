@@ -101,8 +101,8 @@ export default function ProjectsHover() {
   const active = hovered !== null ? projects[hovered] : null;
 
   return (
-    <section id="projects" className="px-6 pt-40 pb-24 bg-[#0B0C1A]" style={{ marginTop: 0 }}>
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" className="pt-40 pb-24 bg-[#0B0C1A]" style={{ marginTop: 0 }}>
+      <div className="content-container">
         <p className="text-sm tracking-[0.3em] uppercase text-white/60 text-center mb-3">
           Our Work
         </p>

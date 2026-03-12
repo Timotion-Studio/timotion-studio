@@ -42,9 +42,11 @@ export default function VinylPlayer() {
   };
 
   return (
-    <div
-      style={{ position: "fixed", bottom: 78, right: 78, zIndex: 50 }}
+    <button
+      aria-label={isPlaying ? "Pause music" : "Play music"}
       onClick={toggle}
+      style={{ position: "fixed", bottom: 78, right: 78, zIndex: 50, background: "none", border: "none", padding: 0 }}
+      className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ffff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#000021] rounded-full"
     >
       {/* Outer wrapper — scale on hover lives here */}
       <div
@@ -127,6 +129,6 @@ export default function VinylPlayer() {
         </div>
 
       </div>
-    </div>
+    </button>
   );
 }

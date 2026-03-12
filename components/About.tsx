@@ -18,8 +18,8 @@ import ParallaxImage from "@/components/ParallaxImage";
 
 export default function About() {
   return (
-    <section id="about" className="py-24 px-6 bg-[#00002e]">
-      <div className="max-w-6xl mx-auto">
+    <section id="about" className="py-24 bg-[#00002e]">
+      <div className="content-container">
         <p className="text-sm tracking-[0.3em] uppercase text-white/60 text-center mb-16">
           About Timotion
         </p>
@@ -30,7 +30,7 @@ export default function About() {
 
           {/* Text content */}
           <div>
-            <h2 className="font-[family-name:var(--font-playfair)] text-5xl md:text-6xl font-bold text-[#ff7bac] mb-8 leading-[1.2] tracking-wide">
+            <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-bold text-[#ff7bac] mb-8 leading-[1.2] tracking-wide">
               Immortalising moments, creating magic.
             </h2>
             <p className="text-[#c8c8d8] leading-relaxed text-lg mb-10">
@@ -44,7 +44,7 @@ export default function About() {
                 href="https://vimeo.com/timotionstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-white/50 hover:text-[#ff7bac] transition-colors duration-300 text-[10px] tracking-widest uppercase cursor-pointer"
+                className="flex items-center gap-2 text-white/50 hover:text-[#00ffff] transition-colors duration-300 text-[10px] tracking-widest uppercase cursor-pointer"
               >
                 <VimeoIcon />
                 Vimeo
@@ -53,7 +53,7 @@ export default function About() {
                 href="https://instagram.com/timotion.mp4"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-white/50 hover:text-[#ff7bac] transition-colors duration-300 text-[10px] tracking-widest uppercase cursor-pointer"
+                className="flex items-center gap-2 text-white/50 hover:text-[#00ffff] transition-colors duration-300 text-[10px] tracking-widest uppercase cursor-pointer"
               >
                 <InstagramIcon />
                 Instagram

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 function VimeoIcon() {
   return (
     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -16,13 +18,15 @@ function InstagramIcon() {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#000021] border-t border-[#f0f0f0]/8 py-12 px-6">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer className="bg-[#000021] border-t border-[#f0f0f0]/8 py-12">
+      <div className="content-container flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="text-center md:text-left">
-          <img
+          <Image
             src="/timotion-logo.png"
             alt="Timotion Studio"
-            style={{ maxHeight: "40px", width: "auto" }}
+            height={40}
+            width={140}
+            style={{ height: "40px", width: "auto" }}
             className="mb-2 mx-auto md:mx-0"
           />
           <p className="text-[#c8c8d8]/70 text-xs tracking-wide">
@@ -36,7 +40,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Vimeo"
-            className="text-white/60 hover:text-[#ff7bac] transition-colors duration-300 cursor-pointer"
+            className="text-white/60 hover:text-[#00ffff] transition-colors duration-300 cursor-pointer"
           >
             <VimeoIcon />
           </a>
@@ -45,7 +49,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
-            className="text-white/60 hover:text-[#ff7bac] transition-colors duration-300 cursor-pointer"
+            className="text-white/60 hover:text-[#00ffff] transition-colors duration-300 cursor-pointer"
           >
             <InstagramIcon />
           </a>

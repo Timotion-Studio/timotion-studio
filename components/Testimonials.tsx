@@ -23,12 +23,12 @@ function QuoteIcon() {
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="py-24 px-6 bg-[#000021]">
-      <div className="max-w-6xl mx-auto">
+    <section id="testimonials" className="py-24 bg-[#000021] scroll-mt-20">
+      <div className="content-container">
         <p className="text-sm tracking-[0.3em] uppercase text-white/60 text-center mb-3">
           Testimonials
         </p>
-        <h2 className="font-[family-name:var(--font-playfair)] text-5xl md:text-6xl text-[#ff7bac] text-center mb-16 font-bold leading-[1.2] tracking-wide">
+        <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl text-[#ff7bac] text-center mb-16 font-bold leading-[1.2] tracking-wide">
           Kind Words
         </h2>
 
@@ -45,10 +45,10 @@ export default function Testimonials() {
                 </blockquote>
               </div>
               <div className="mt-10 pt-6 border-t border-white/10">
-                <p className="text-[#ff7bac] text-[10px] tracking-widest uppercase font-semibold">
+                <p className="text-[#ff7bac] text-xs tracking-widest uppercase font-semibold">
                   {t.client}
                 </p>
-                <p className="text-white/60 text-[10px] tracking-widest uppercase mt-1">
+                <p className="text-white/60 text-xs tracking-widest uppercase mt-1">
                   {t.role}
                 </p>
               </div>

@@ -1,6 +1,6 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import ProjectsHover from "@/components/ProjectsHover";
+import ProjectsGrid from "@/components/ProjectsGrid";
 import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
 import About from "@/components/About";
@@ -13,7 +13,7 @@ export default function Home() {
     <main className="bg-[#000021] min-h-screen">
       <Nav />
       <Hero />
-      <ProjectsHover />
+      <ProjectsGrid />
       <Services />
       <Testimonials />
       <About />

@@ -169,13 +169,13 @@ export default function QualificationForm() {
   const stepLabels = ["You", "Project", "Details", "Budget"];
 
   return (
-    <section id="qualify" className="py-24 px-6 bg-[#00002e]">
-      <div className="max-w-2xl mx-auto">
+    <section id="qualify" className="py-24 bg-[#00002e] scroll-mt-20">
+      <div className="content-container">
         {/* Header */}
         <p className="text-sm tracking-[0.3em] uppercase text-white/60 text-center mb-3">
           Start Your Project
         </p>
-        <h2 className="font-[family-name:var(--font-playfair)] text-5xl md:text-6xl text-[#ff7bac] text-center mb-4 font-bold leading-[1.2] tracking-wide">
+        <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl text-[#ff7bac] text-center mb-4 font-bold leading-[1.2] tracking-wide">
           Let&apos;s See If We&apos;re The Right Fit
         </h2>
         <p className="text-[#c8c8d8] text-base text-center mb-14 leading-relaxed">
@@ -211,14 +211,14 @@ export default function QualificationForm() {
                       style={{
                         background:
                           i + 1 < step
-                            ? "#ff7bac"
+                            ? "#00ffff"
                             : i + 1 === step
-                            ? "rgba(255,123,172,0.18)"
+                            ? "rgba(0,255,255,0.18)"
                             : "rgba(255,255,255,0.05)",
                         border: `1px solid ${
-                          i + 1 <= step ? "#ff7bac" : "rgba(255,255,255,0.12)"
+                          i + 1 <= step ? "#00ffff" : "rgba(255,255,255,0.12)"
                         }`,
-                        color: i + 1 <= step ? (i + 1 < step ? "#000021" : "#ff7bac") : "rgba(255,255,255,0.3)",
+                        color: i + 1 <= step ? (i + 1 < step ? "#000021" : "#00ffff") : "rgba(255,255,255,0.3)",
                       }}
                     >
                       {i + 1 < step ? (
@@ -230,8 +230,8 @@ export default function QualificationForm() {
                       )}
                     </div>
                     <span
-                      className="text-[10px] tracking-widest uppercase hidden sm:block"
-                      style={{ color: i + 1 === step ? "#ff7bac" : "rgba(255,255,255,0.55)" }}
+                      className="text-sm tracking-widest uppercase hidden sm:block"
+                      style={{ color: i + 1 === step ? "#00ffff" : "rgba(255,255,255,0.55)" }}
                     >
                       {label}
                     </span>
@@ -241,7 +241,7 @@ export default function QualificationForm() {
               {/* Track */}
               <div className="relative h-px bg-white/8 mt-2">
                 <div
-                  className="absolute top-0 left-0 h-full bg-[#ff7bac] transition-all duration-500"
+                  className="absolute top-0 left-0 h-full bg-[#00ffff] transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -252,7 +252,7 @@ export default function QualificationForm() {
               {/* ── Step 1: About You ── */}
               {step === 1 && (
                 <div className="space-y-5">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6 leading-[1.2] tracking-wide">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-lg text-white font-bold mb-6 leading-[1.2] tracking-wide">
                     Tell us about yourself
                   </h3>
 
@@ -300,7 +300,7 @@ export default function QualificationForm() {
               {/* ── Step 2: Project Type ── */}
               {step === 2 && (
                 <div className="space-y-6">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6 leading-[1.2] tracking-wide">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-lg text-white font-bold mb-6 leading-[1.2] tracking-wide">
                     What are you looking for?
                   </h3>
 
@@ -343,7 +343,7 @@ export default function QualificationForm() {
               {/* ── Step 3: Project Details ── */}
               {step === 3 && (
                 <div className="space-y-5">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6 leading-[1.2] tracking-wide">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-lg text-white font-bold mb-6 leading-[1.2] tracking-wide">
                     Tell us about the project
                   </h3>
 
@@ -383,7 +383,7 @@ export default function QualificationForm() {
               {/* ── Step 4: Budget & Wrap-up ── */}
               {step === 4 && (
                 <div className="space-y-6">
-                  <h3 className="font-[family-name:var(--font-playfair)] text-2xl text-white font-bold mb-6 leading-[1.2] tracking-wide">
+                  <h3 className="font-[family-name:var(--font-playfair)] text-lg text-white font-bold mb-6 leading-[1.2] tracking-wide">
                     Investment & timeline
                   </h3>
 
@@ -483,7 +483,7 @@ export default function QualificationForm() {
             </div>
 
             {/* Step counter */}
-            <p className="text-center text-[10px] tracking-widest uppercase text-white/20 mt-5">
+            <p className="text-center text-xs tracking-widest uppercase text-white/20 mt-5">
               Step {step} of {TOTAL_STEPS}
             </p>
           </>
