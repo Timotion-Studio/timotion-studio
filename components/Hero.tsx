@@ -64,7 +64,7 @@ export default function Hero() {
         muted
         loop
         playsInline
-        poster="/hero-poster.jpg"
+        poster="/hero-poster.png"
         className="hero-bg absolute inset-0 w-full h-full object-cover"
         style={{ zIndex: 0 }}
       >

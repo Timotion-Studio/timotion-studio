@@ -1,15 +1,21 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import ContactModal from "./ContactModal";
 
-const links = ["Projects", "Services", "Testimonials", "Qualify"] as const;
+const links = [
+  { label: "Projects", href: "/#projects" },
+  { label: "Services", href: "/#services" },
+  { label: "Testimonials", href: "/#testimonials" },
+  { label: "Qualify", href: "/#qualify" },
+] as const;
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const lastY = useRef(0);
 
   useEffect(() => {
@@ -28,9 +34,12 @@ export default function Nav() {
   }, []);
 
   return (
+    <>
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        !hidden && scrolled ? "bg-[#000021] shadow-[0_1px_0_rgba(255,255,255,0.06)]" : "bg-transparent"
+        !hidden && scrolled
+          ? "bg-[#000021] shadow-[0_1px_0_rgba(255,255,255,0.06)]"
+          : "bg-transparent"
       }`}
       style={{ transform: hidden ? "translateY(-100%)" : "translateY(0)" }}
     >
@@ -49,20 +58,20 @@ export default function Nav() {
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-10">
           {links.map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
+            <Link
+              key={item.label}
+              href={item.href}
               className="nav-link-cyan text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ffff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#000021]"
             >
-              {item}
-            </a>
+              {item.label}
+            </Link>
           ))}
-          <Link
-            href="/contact"
-            className="nav-link-cyan text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ffff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#000021]"
+          <button
+            onClick={() => setContactOpen(true)}
+            className="nav-link-cyan text-sm tracking-widest uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ffff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#000021] cursor-pointer"
           >
             Contact
-          </Link>
+          </button>
         </div>
 
         {/* Mobile hamburger */}
@@ -85,14 +94,14 @@ export default function Nav() {
       {menuOpen && (
         <div className="md:hidden bg-[#000021] border-t border-[#f0f0f0]/10 px-6 py-6 flex flex-col gap-6">
           {links.map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
+            <Link
+              key={item.label}
+              href={item.href}
               onClick={() => setMenuOpen(false)}
               className="nav-link-cyan text-xs tracking-widest uppercase"
             >
-              {item}
-            </a>
+              {item.label}
+            </Link>
           ))}
           <Link
             href="/contact"
@@ -104,5 +113,7 @@ export default function Nav() {
         </div>
       )}
     </nav>
+    <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
+    </>
   );
 }
