@@ -45,6 +45,19 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const allowedOrigins = [
+    "https://timotion.studio",
+    "https://www.timotion.studio",
+    "https://timotion-studio-timotion-studios-projects.vercel.app",
+  ];
+
+  const origin = req.headers.get("origin") ?? req.headers.get("referer") ?? "";
+  const isAllowedOrigin = allowedOrigins.some((o) => origin.startsWith(o));
+
+  if (!isAllowedOrigin) {
+    return NextResponse.json({ error: "Forbidden." }, { status: 403 });
+  }
+
   try {
     const body = await req.json();
     const {
@@ -68,6 +81,16 @@ export async function POST(req: NextRequest) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
+    }
+
+    if (name.length > 100) {
+      return NextResponse.json({ error: "Name is too long." }, { status: 400 });
+    }
+    if (email.length > 254) {
+      return NextResponse.json({ error: "Email is too long." }, { status: 400 });
+    }
+    if (description && description.length > 5000) {
+      return NextResponse.json({ error: "Message is too long." }, { status: 400 });
     }
 
     const safeProjectTypes = projectTypes?.map((t: string) => escapeHtml(t)).join(", ") || "—";

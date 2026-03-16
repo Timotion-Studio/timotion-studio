@@ -63,6 +63,7 @@ export default function Contact() {
                 type="text"
                 placeholder="Name"
                 required
+                maxLength={100}
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 className="w-full bg-[#00002e] border border-[#f0f0f0]/10 text-[#f0f0f0] placeholder-[#f0f0f0]/25 px-6 py-4 text-base focus:outline-none focus:border-[#ff7bac] transition-colors duration-300"
@@ -75,6 +76,7 @@ export default function Contact() {
                 type="email"
                 placeholder="Email"
                 required
+                maxLength={254}
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full bg-[#00002e] border border-[#f0f0f0]/10 text-[#f0f0f0] placeholder-[#f0f0f0]/25 px-6 py-4 text-base focus:outline-none focus:border-[#ff7bac] transition-colors duration-300"
@@ -87,6 +89,7 @@ export default function Contact() {
                 placeholder="Message"
                 required
                 rows={6}
+                maxLength={5000}
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 className="w-full bg-[#00002e] border border-[#f0f0f0]/10 text-[#f0f0f0] placeholder-[#f0f0f0]/25 px-6 py-4 text-base focus:outline-none focus:border-[#ff7bac] transition-colors duration-300 resize-none"

@@ -110,6 +110,7 @@ export default function ContactModal({ isOpen, onClose }: Props) {
               type="text"
               placeholder="Name"
               required
+              maxLength={100}
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="w-full bg-[#000021] border border-[#f0f0f0]/10 text-[#f0f0f0] placeholder-[#f0f0f0]/25 px-5 py-3.5 text-sm focus:outline-none focus:border-[#ff7bac] transition-colors"
@@ -118,6 +119,7 @@ export default function ContactModal({ isOpen, onClose }: Props) {
               type="email"
               placeholder="Email"
               required
+              maxLength={254}
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               className="w-full bg-[#000021] border border-[#f0f0f0]/10 text-[#f0f0f0] placeholder-[#f0f0f0]/25 px-5 py-3.5 text-sm focus:outline-none focus:border-[#ff7bac] transition-colors"
@@ -126,6 +128,7 @@ export default function ContactModal({ isOpen, onClose }: Props) {
               placeholder="Message"
               required
               rows={5}
+              maxLength={5000}
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               className="w-full bg-[#000021] border border-[#f0f0f0]/10 text-[#f0f0f0] placeholder-[#f0f0f0]/25 px-5 py-3.5 text-sm focus:outline-none focus:border-[#ff7bac] transition-colors resize-none"

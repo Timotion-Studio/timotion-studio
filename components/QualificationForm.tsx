@@ -263,6 +263,7 @@ export default function QualificationForm() {
                     <input
                       type="text"
                       placeholder="Your name"
+                      maxLength={100}
                       value={data.name}
                       onChange={(e) => setData({ ...data, name: e.target.value })}
                       className={inputCls}
@@ -273,6 +274,7 @@ export default function QualificationForm() {
                     <input
                       type="email"
                       placeholder="your@email.com"
+                      maxLength={254}
                       value={data.email}
                       onChange={(e) => setData({ ...data, email: e.target.value })}
                       className={inputCls}
@@ -355,6 +357,7 @@ export default function QualificationForm() {
                       <input
                         type="text"
                         placeholder="e.g. June 2025 or TBD"
+                        maxLength={200}
                         value={data.date}
                         onChange={(e) => setData({ ...data, date: e.target.value })}
                         className={inputCls}
@@ -364,6 +367,7 @@ export default function QualificationForm() {
                       <input
                         type="text"
                         placeholder="City or venue"
+                        maxLength={200}
                         value={data.location}
                         onChange={(e) => setData({ ...data, location: e.target.value })}
                         className={inputCls}
@@ -375,6 +379,7 @@ export default function QualificationForm() {
                     <textarea
                       placeholder="Tell us what you have in mind — the more detail the better."
                       rows={5}
+                      maxLength={5000}
                       value={data.description}
                       onChange={(e) => setData({ ...data, description: e.target.value })}
                       className={`${inputCls} resize-none`}
