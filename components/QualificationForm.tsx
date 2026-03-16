@@ -126,6 +126,8 @@ export default function QualificationForm() {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<FormData>(initialData);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [animKey, setAnimKey] = useState(0);
 
   const goTo = (next: number) => {
@@ -143,25 +145,26 @@ export default function QualificationForm() {
     }));
   };
 
-  const handleSubmit = () => {
-    const subject = encodeURIComponent(`Project Enquiry from ${data.name}`);
-    const body = encodeURIComponent(
-      [
-        `Name: ${data.name}`,
-        `Email: ${data.email}`,
-        `Client Type: ${data.clientType}`,
-        `Service: ${data.service}`,
-        `Project Types: ${data.projectTypes.join(", ")}`,
-        `Date: ${data.date}`,
-        `Location: ${data.location}`,
-        `Description: ${data.description}`,
-        `Budget: ${data.budget}`,
-        `Urgency: ${data.urgency}`,
-        `Referral: ${data.referral}`,
-      ].join("\n")
-    );
-    window.location.href = `mailto:hello@timotion.studio?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+  const handleSubmit = async (e?: React.SyntheticEvent) => {
+    e?.preventDefault();
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({}));
+        throw new Error(json.error ?? "Something went wrong. Please try again.");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const progress = ((step - 1) / (TOTAL_STEPS - 1)) * 100;
@@ -474,13 +477,20 @@ export default function QualificationForm() {
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  disabled={!data.budget || !data.urgency}
+                  disabled={!data.budget || !data.urgency || submitting}
                   className="px-10 py-3.5 bg-[#ff7bac] text-[#000021] text-[10px] tracking-[0.3em] uppercase font-semibold hover:bg-[#ff60a0] transition-colors duration-300 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                  Submit Brief →
+                  {submitting ? "Sending…" : "Submit Brief →"}
                 </button>
               )}
             </div>
+
+            {/* Error message */}
+            {submitError && (
+              <p className="text-center text-sm text-red-400 mt-4">
+                {submitError}
+              </p>
+            )}
 
             {/* Step counter */}
             <p className="text-center text-xs tracking-widest uppercase text-white/20 mt-5">
