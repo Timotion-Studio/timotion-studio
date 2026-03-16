@@ -42,11 +42,19 @@ The site alternates between `#000021` and `#00002e` to create subtle section sep
 
 | Name | Hex | CSS variable | Used for |
 |------|-----|--------------|----------|
-| Pink | `#ff7bac` | `--color-pink` / `--color-gold` | ALL headlines, ALL CTAs, category labels, active states, borders on selected items, progress indicators, section number markers |
+| Pink | `#ff7bac` | `--color-pink` / `--color-gold` | ALL headlines, ALL primary CTAs, selected/active states, ghost/decorative numbers, progress indicators, category labels, attribution text |
 | Pink hover | `#ff60a0` | — | CTA button hover state only |
-| Cyan | `#00ffff` | — | VinylPlayer hover overlay **only** — nowhere else |
+| Cyan | `#00ffff` | — | Nav links, secondary CTA labels ("Learn more →"), focus rings, scroll indicator, VinylPlayer hover overlay |
 
 > Note: `--color-gold` and `--color-pink` are the same value (`#ff7bac`). The gold token name is a legacy alias from an earlier design iteration.
+
+### Accent color roles
+
+**Pink (`#ff7bac`)** is the primary brand accent. It owns all emphasis, identity, and action: headlines, primary CTA buttons, selected/active states, progress indicators, attribution text, ghost/decorative numbers, and category labels. Pink means "this matters" or "do this".
+
+**Cyan (`#00ffff`)** is the secondary accent for navigation and exploration. It is used for: nav links, secondary CTA labels ("Learn more →", "View all →"), focus rings (`focus-visible`), and the scroll indicator. Cyan means "go here" or "look around".
+
+Cyan must never be used for: headlines, primary CTA buttons, selected/active states (form pills, option cards, tabs), body text, ghost/decorative numbers, borders on interactive elements, or large surface areas.
 
 ### Text colors
 
@@ -396,7 +404,7 @@ These constraints define the visual identity and must be followed on all new pag
 
 **All display headlines are pink.** Every H1 and section H2 uses `#ff7bac`. Project titles, service names, section CTAs — all pink. The only exception is card-level H3 elements (service cards, deliverable items, process steps, form step titles) which use white, because they are subordinate to a section heading rather than acting as page-level display headings themselves.
 
-**Cyan (`#00ffff`) is reserved for the vinyl easter egg only.** It does not appear on links, borders, highlights, active states, focus rings, or any interactive element elsewhere on the site.
+**Cyan (`#00ffff`) is the secondary navigational accent.** It appears on nav links, secondary CTA labels ("Learn more →", "View all →"), focus rings, the scroll indicator, and the VinylPlayer hover overlay. It does not appear on headlines, primary CTA buttons, selected/active states, ghost/decorative numbers, body text, or large surface areas. Pink remains the sole accent for emphasis and primary actions.
 
 **No tooltips or labels on the VinylPlayer.** It is a hidden easter egg. Cursor change, scale, and cyan hover tint are the sole affordances. Never add a tooltip, popover, aria-label visible to sighted users, or any instructional text.
 

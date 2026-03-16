@@ -46,16 +46,16 @@ export default function Services() {
               href={`/services/${service.slug}`}
               className="group bg-[#00002e] p-10 relative hover:bg-[#000035] transition-colors duration-300 block"
             >
-              <span className="absolute top-10 right-10 text-[#00ffff]/15 font-[family-name:var(--font-playfair)] text-5xl font-bold select-none">
+              <span className="absolute top-10 right-10 text-[#ff7bac]/10 font-[family-name:var(--font-playfair)] text-5xl font-bold select-none">
                 0{i + 1}
               </span>
-              <h3 className="font-[family-name:var(--font-playfair)] text-lg font-semibold text-white mb-4 leading-[1.2] tracking-wide group-hover:text-[#ff7bac] transition-colors duration-300">
+              <h3 className="font-[family-name:var(--font-playfair)] text-xl font-semibold text-white mb-4 leading-[1.2] tracking-wide group-hover:text-[#ff7bac] transition-colors duration-300">
                 {service.name}
               </h3>
-              <p className="text-[#c8c8d8]/80 text-sm leading-relaxed mb-6">
+              <p className="text-white/70 text-sm leading-relaxed mb-6">
                 {service.tagline}
               </p>
-              <span className="service-learn-more text-[10px] tracking-widest uppercase">
+              <span className="service-learn-more text-xs tracking-widest uppercase group-hover:underline underline-offset-4">
                 Learn more →
               </span>
             </Link>

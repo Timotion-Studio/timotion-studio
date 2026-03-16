@@ -12,16 +12,6 @@ const testimonials = [
     client: "Jerrald",
     role: "The Drag Agency",
   },
-  {
-    quote: "Timo has an incredible eye for detail and a real passion for storytelling. The photos from our shoot exceeded every expectation — we couldn't be happier with the result.",
-    client: "Sarah M.",
-    role: "Brand Client",
-  },
-  {
-    quote: "Working with Timotion Studio was a seamless experience from start to finish. Professional, creative, and genuinely invested in capturing something special.",
-    client: "Thomas & Elena",
-    role: "Wedding Clients",
-  },
 ];
 
 function QuoteIcon() {
@@ -60,16 +50,8 @@ export default function Testimonials() {
     return () => observer.disconnect();
   }, []);
 
-  // Dot click — scroll card into view
-  const scrollToCard = useCallback((index: number) => {
-    const card = cardRefs.current[index];
-    if (card) {
-      card.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }, []);
-
   return (
-    <section id="testimonials" className="py-24 bg-[#000021] scroll-mt-20">
+    <section id="testimonials" className="pt-24 pb-18 bg-[#000021] scroll-mt-20">
       {/* Header */}
       <div className="content-container mb-16">
         <p className="text-sm tracking-[0.3em] uppercase text-white/60 text-center mb-3">
@@ -87,17 +69,17 @@ export default function Testimonials() {
             <div
               key={t.client}
               ref={(el) => setCardRef(el, i)}
-              className="opacity-0 bg-[#00002e] border border-white/5 p-10 flex flex-col justify-between"
-              style={{ minHeight: "280px" }}
+              className="border-t border-white/10 pt-12 px-10 pb-10 flex flex-col justify-between"
+              style={{ minHeight: "280px", opacity: 0, transform: "translateY(20px)" }}
             >
               <div>
                 <QuoteIcon />
-                <blockquote className="font-[family-name:var(--font-playfair)] text-xl italic text-white leading-relaxed">
+                <blockquote className="font-[family-name:var(--font-playfair)] text-lg italic text-white/90 leading-[1.8]">
                   {t.quote}
                 </blockquote>
               </div>
               <div className="mt-10 pt-6 border-t border-white/10">
-                <p className="text-[#ff7bac] text-xs tracking-widest uppercase font-semibold">
+                <p className="text-[#ff7bac] text-sm tracking-widest uppercase font-semibold">
                   {t.client}
                 </p>
                 <p className="text-white/60 text-xs tracking-widest uppercase mt-1">
@@ -109,17 +91,6 @@ export default function Testimonials() {
         </div>
       </div>
 
-      {/* Dot navigator */}
-      <div className="flex justify-center gap-3 mt-10">
-        {testimonials.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => scrollToCard(i)}
-            aria-label={`Go to testimonial ${i + 1}`}
-            className="w-1.5 h-1.5 bg-white/20 hover:bg-[#ff7bac]/60 rounded-full transition-colors duration-300 cursor-pointer"
-          />
-        ))}
-      </div>
     </section>
   );
 }
