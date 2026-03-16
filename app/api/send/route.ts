@@ -6,6 +6,22 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM = "Timotion Studio <hello@timotion.studio>";
 const NOTIFY_TO = "hello@timotion.studio";
 
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return false;
+  }
+  if (entry.count >= RATE_LIMIT) return true;
+  entry.count++;
+  return false;
+}
+
 function escapeHtml(value: unknown): string {
   if (value === null || value === undefined) return "";
   return String(value)
@@ -17,6 +33,18 @@ function escapeHtml(value: unknown): string {
 }
 
 export async function POST(req: NextRequest) {
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "unknown";
+
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await req.json();
     const {
@@ -35,6 +63,11 @@ export async function POST(req: NextRequest) {
 
     if (!name || !email) {
       return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
     }
 
     const safeProjectTypes = projectTypes?.map((t: string) => escapeHtml(t)).join(", ") || "—";
