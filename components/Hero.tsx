@@ -54,7 +54,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden bg-[#000021]"
     >
 
       {/* ── Background video ── */}
