@@ -58,6 +58,10 @@ p {
   animation: fadeInRight 0.35s cubic-bezier(0.22,1,0.36,1) forwards;
 }
 
+.testimonial-visible {
+  animation: fadeInUp 0.6s ease forwards !important;
+}
+
 
 /* Scroll indicator */
 .scroll-wrapper {
@@ -172,10 +176,6 @@ p {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
-#testimonials .snap-x::-webkit-scrollbar {
-  display: none;
-}
-
 .vinyl-disc-spinning {
   animation: vinylSpin 2s linear infinite !important;
 }

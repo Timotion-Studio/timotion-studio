@@ -165,9 +165,6 @@ export async function POST(req: NextRequest) {
       }),
     ]);
 
-    console.log("Resend notification response:", JSON.stringify(notification));
-    console.log("Resend autoReply response:", JSON.stringify(autoReply));
-
     if (notification.error || autoReply.error) {
       console.error("Resend error:", JSON.stringify(notification.error ?? autoReply.error));
       return NextResponse.json({ error: "Failed to send email." }, { status: 500 });

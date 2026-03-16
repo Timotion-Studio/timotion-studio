@@ -172,7 +172,7 @@ All sections use `py-24 px-6` as the default. Exceptions:
 | Component | Grid |
 |-----------|------|
 | Services cards | `grid-cols-1 md:grid-cols-3` with 1px gap technique |
-| Testimonials | `grid-cols-1 md:grid-cols-2 gap-8` |
+| Testimonials | `grid-cols-1 md:grid-cols-2 gap-8` with `.testimonial-visible` fade-in-on-scroll |
 | About section | `grid-cols-1 md:grid-cols-2 gap-16 items-center` |
 | Deliverables (service page) | `grid-cols-1 md:grid-cols-2` with 1px gap technique |
 | Related projects (service page) | `grid-cols-1 md:grid-cols-2 lg:grid-cols-3` with 1px gap technique |
@@ -208,7 +208,11 @@ Tabbed section. "Photography" and "Videography" toggle buttons filter services v
 
 ### Testimonials
 
-Two-column grid on `#000021`. Cards use `#00002e` background with `border-white/5`. Quote icon is pink at 40% opacity. Blockquote in TAN Memories italic. Author in pink 10px uppercase; role in white/60 10px uppercase, separated from the quote by a `border-white/10` hairline.
+Two-column grid (`grid-cols-1 md:grid-cols-2 gap-8`) on `#000021` inside `content-container`. Each card starts `opacity-0` and fades in via IntersectionObserver, which adds the `.testimonial-visible` class (defined in `globals.css`) when the card enters 15% of the viewport. The animation uses the existing `fadeInUp` keyframe at `0.6s ease forwards`. Cards are unobserved after animating — the effect fires once.
+
+Cards use `#00002e` background with `border-white/5`. Quote icon is pink at 40% opacity. Blockquote in TAN Memories italic. Author in pink 10px uppercase; role in white/60 10px uppercase, separated from the quote by a `border-white/10` hairline.
+
+Four small dot navigators below the grid scroll the matching card into view on click (`scrollIntoView` with `behavior: smooth, block: center`). Dots are `rounded-full` (permitted by the border-radius exception for indicators), `bg-white/20` default, `bg-[#ff7bac]/60` on hover.
 
 ### About
 
