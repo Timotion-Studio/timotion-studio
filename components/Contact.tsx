@@ -5,15 +5,29 @@ import { useState } from "react";
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const subject = encodeURIComponent(`Enquiry from ${form.name}`);
-    const body = encodeURIComponent(
-      `${form.message}\n\nFrom: ${form.name}\nEmail: ${form.email}`
-    );
-    window.location.href = `mailto:hello@timotion.studio?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+  const handleSubmit = async (e?: React.SyntheticEvent) => {
+    e?.preventDefault();
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: form.name, email: form.email, description: form.message }),
+      });
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({}));
+        throw new Error(json.error ?? "Something went wrong. Please try again.");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -79,11 +93,16 @@ export default function Contact() {
               />
             </div>
             <button
-              type="submit"
-              className="w-full py-4 bg-[#ff7bac] text-[#000021] text-[10px] tracking-[0.3em] uppercase font-semibold hover:bg-[#ff60a0] transition-colors duration-300 cursor-pointer"
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitting}
+              className="w-full py-4 bg-[#ff7bac] text-[#000021] text-[10px] tracking-[0.3em] uppercase font-semibold hover:bg-[#ff60a0] transition-colors duration-300 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              Send Message
+              {submitting ? "Sending…" : "Send Message"}
             </button>
+            {submitError && (
+              <p className="text-sm text-red-400 text-center mt-3">{submitError}</p>
+            )}
           </form>
         )}
       </div>
