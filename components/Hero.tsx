@@ -111,7 +111,7 @@ export default function Hero() {
           ref={headlineRef}
           className="hero-text font-[family-name:var(--font-playfair)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#ff7bac] leading-[1.35] tracking-[0.06em] mb-12"
         >
-          Picture-Perfect Moments: Exceptional Photography &amp; Cinematic Films
+          Every story deserves to be felt, not just seen.
         </h1>
 
         <div ref={ctaRef} className="hero-cta flex flex-col sm:flex-row gap-4 justify-center">
