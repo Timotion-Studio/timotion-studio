@@ -28,16 +28,16 @@ export const projects: Project[] = [
     index: "01",
     category: "Fashion Film",
     title: "Iberoafrican",
-    client: "Iberoafrican Collective",
+    client: "ZIYEL",
     year: "2023",
     vimeoId: "866267301",
-    tagline: "Where two cultures collide through fabric, movement & light.",
+    tagline: "Where two cultures collide through fabric, movement & identity",
     scope:
-      "A cinematic fashion film celebrating the rich dialogue between Iberian and African cultures. The brief called for a piece that felt both editorial and alive — a visual essay told through movement, texture, and dramatic light. The collective wanted something that could anchor their brand identity and carry emotional weight beyond a standard lookbook.",
+      "A fashion film commissioned by ZIYEL — a Dutch-Moroccan brand born from a family story that stretches from the north of Africa to the northwest of Europe. The founder wanted a film that carried that dual identity: not a lookbook, but a statement. This is the third episode in an ongoing series, with the final chapter planned for Morocco.",
     process:
-      "Two weeks of pre-production were spent developing the visual language alongside the creative director. Locations were scouted across the city to find spaces that bridged both worlds — sun-bleached courtyards, raw concrete interiors, and open rooftops with golden hour light. The two-day shoot ran with a lean crew, allowing us to move quickly and preserve the spontaneous energy between the orchestrated sequences.",
+      "We shot in a daylight studio on a semi-cloudy day, constantly adapting to shifting light and lower contrast than planned. The location had more to work with than expected — we made decisions on the spot, including placing the model half behind a curtain — the simplest image we made that day, and the most honest.",
     result:
-      "A 3-minute film that has since served as the brand's cornerstone content piece, screened at cultural events and shared widely across their digital channels. The work earned the collective significant recognition within the European independent fashion community and continues to drive new client and collaborator interest.",
+      "The film landed exactly where it needed to — on ZIYEL's website as a hero banner, in their advertising, and shared across their channels. The founder loved what we built together.",
     testimonial: null,
     bg1: "#2d1b4e",
     bg2: "#000021",
@@ -55,11 +55,11 @@ export const projects: Project[] = [
     vimeoId: "997674576",
     tagline: "A day too full of love to ever truly fit in a single frame.",
     scope:
-      "A full-day wedding film for a couple who wanted their story told with intimacy and soul — not just the ceremony, but the full feeling of the day. The brief was clear: documentary-first, cinematic second. No rigid shot lists, no posed performance — just the real thing, told beautifully.",
+      "A wedding film for Gino and Cynthia — two people who've been travelling the world together for over 12 years, living life to the fullest. When he finally asked her to marry him, she always knew this day would come. They chose South Africa, the country they both wholeheartedly love, as the place to say it out loud. They trusted me completely — the vision was mine from the start.",
     process:
-      "We embedded ourselves from morning preparations through to the last dance, shadowing the couple and their guests with two cameras running in parallel. The edit went through three passes — building from a raw timeline to a fully graded, scored film — with the couple involved in key decisions throughout.",
+      "A day and a half on a stunning farm above Cape Town, deep in the winelands. Rolling hills, mountains, vineyards as far as the eye can see. I was running — fixing a sound setup issue on the spot, which reminded me once again: always double check, no matter who you're working with. But the day itself was gorgeous. Everyone looked beautiful, the band was incredible. Then his mother stood up to speak — emotional, beautiful, heart-breaking in the best of ways. Then came golden hour. The sun dropped slowly behind the mountains, turning everything soft and golden, the whole dinner table glowing like a painting. I had everything I needed.",
     result:
-      "A 7-minute feature film and a 90-second highlight reel, both delivered within three weeks of the wedding. The couple described watching it back as reliving every emotion of the day all over again. The feature has since been shared privately with family and friends across three continents.",
+      "They cried. Cynthia said it was such a beautiful gift — those days, immortalised forever. They were so thankful to have it. Watching it back, it made me realise once again that I have a knack for making tear-jerker films.",
     testimonial: {
       quote:
         "We were blown away. Timo has this incredible ability to be everywhere without ever feeling intrusive. The film he made is the most treasured thing we have from our wedding day.",
@@ -77,16 +77,16 @@ export const projects: Project[] = [
     index: "03",
     category: "Short Film",
     title: "The Gift",
-    client: "Independent Production",
+    client: "Personal Project",
     year: "2023",
     vimeoId: "826875302",
     tagline: "A quiet story about the things we give and the things we keep.",
     scope:
-      "An original short narrative film exploring the quiet power of giving — made in collaboration with an emerging filmmaker whose script had been sitting in a drawer for two years. The project was entirely self-initiated, with Timotion Studio handling cinematography, colour grade, and post-production end-to-end.",
+      "A personal short film, made entirely for the love of making. No brief, no client — just a storyboard, a camera, a drone, and a feeling. Shot on Clifton Beach in Cape Town at golden hour, The Gift is about life itself — everything it gives, everything it asks for in return. It features Aletta, a Dutch Bali-based model who visits Cape Town every year. I'd always wanted to make something with her. I waited until the moment felt right. It always does.",
     process:
-      "The script went through four drafts before we locked picture. Principal photography ran over three days across two locations, with a tight but experienced crew. The grade was developed to feel intimate and slightly desaturated — warm in the memories, cooler in the present.",
+      "I operated everything myself — camera and drone, solo. The plan was clear but the day breathed naturally. The sea was spraying up water that caught and diffused the golden light, wrapping everything in softness. The drone caught Aletta walking across the beach as a wave came rolling in, folding around a large rock in the middle — one of those frames you can't plan. At some point she started filming me on her phone for backstage content. I hadn't planned to include it, but it made the film more honest. Less posed, more real.",
     result:
-      "A 12-minute film that has screened at two independent film festivals, earning a Best Cinematography nomination. It continues to circulate on the independent festival circuit and has opened conversations with several production companies interested in future collaboration.",
+      "A purely personal piece, shared to socials and living permanently on the portfolio. Aletta thought it was beautiful. Sometimes the work you make just for yourself is the work that says the most about who you are.",
     testimonial: {
       quote:
         "The Gift is exactly what I imagined it to be — only better. Timo understood the material immediately and brought a visual intelligence to it that I couldn't have anticipated. It's a film I'm genuinely proud of.",
