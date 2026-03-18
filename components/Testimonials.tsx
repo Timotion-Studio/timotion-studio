@@ -1,18 +1,6 @@
 "use client";
 import { useEffect, useRef, useCallback } from "react";
-
-const testimonials = [
-  {
-    quote: "We had the pleasure of working with Timo and his team when creating the music video for our recent single 'Obsessed'. His amazingly creative but also deadline-driven approach to the whole project meant we achieved an incredibly unique video on time and to an unbelievable standard!!!",
-    client: "Pink Panda",
-    role: "DJ Collective",
-  },
-  {
-    quote: "Collaborating with Timo was super easy and the end result is amazing. Janey and Bee were super happy with the video for 'Turned Heads'. The combination of creativity, punctuality and communication is rare in our industry. We would definitely work with Timo again!",
-    client: "Jerrald",
-    role: "The Drag Agency",
-  },
-];
+import type { SanityTestimonial } from "@/sanity/types";
 
 function QuoteIcon() {
   return (
@@ -22,7 +10,7 @@ function QuoteIcon() {
   );
 }
 
-export default function Testimonials() {
+export default function Testimonials({ testimonials }: { testimonials: SanityTestimonial[] }) {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const setCardRef = useCallback((el: HTMLDivElement | null, i: number) => {
@@ -67,7 +55,7 @@ export default function Testimonials() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {testimonials.map((t, i) => (
             <div
-              key={t.client}
+              key={t._id}
               ref={(el) => setCardRef(el, i)}
               className="border-t border-white/10 pt-12 px-10 pb-10 flex flex-col justify-between"
               style={{ minHeight: "280px", opacity: 0, transform: "translateY(20px)" }}
@@ -80,7 +68,7 @@ export default function Testimonials() {
               </div>
               <div className="mt-10 pt-6 border-t border-white/10">
                 <p className="text-[#ff7bac] text-sm tracking-widest uppercase font-semibold">
-                  {t.client}
+                  {t.clientName}
                 </p>
                 <p className="text-white/60 text-xs tracking-widest uppercase mt-1">
                   {t.role}

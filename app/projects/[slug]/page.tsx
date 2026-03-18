@@ -1,23 +1,67 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getProject, getAllProjects, getAdjacentProjects } from "@/lib/projects";
+import { sanityFetch } from "@/sanity/client";
+import type { SanityProject } from "@/sanity/types";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
+function extractBlockText(block: { _type: string; children?: unknown[] }): string {
+  if (block._type === "block" && Array.isArray(block.children)) {
+    return block.children
+      .map((c) => ("text" in (c as Record<string, unknown>) ? String((c as Record<string, unknown>).text) : ""))
+      .join("");
+  }
+  return "";
+}
+
+function extractSections(
+  blocks: SanityProject["longDescription"],
+): [string, string, string] {
+  if (!blocks?.length) return ["", "", ""];
+
+  // Case 1: three separate blocks (one per section)
+  if (blocks.length >= 3) {
+    return [
+      stripHeader(extractBlockText(blocks[0])),
+      stripHeader(extractBlockText(blocks[1])),
+      stripHeader(extractBlockText(blocks[2])),
+    ];
+  }
+
+  // Case 2: all sections in a single block, separated by "0X" headers
+  const fullText = blocks.map((b) => extractBlockText(b)).join("\n");
+  const parts = fullText.split(/\n+(?=0[1-3]\s)/);
+  return [
+    stripHeader(parts[0] ?? ""),
+    stripHeader(parts[1] ?? ""),
+    stripHeader(parts[2] ?? ""),
+  ];
+}
+
+function stripHeader(text: string): string {
+  return text.replace(/^0[1-3]\s*[A-Za-z ]+\n\s*/, "").trim();
+}
+
 export async function generateStaticParams() {
-  return getAllProjects().map((p) => ({ slug: p.slug }));
+  const projects = await sanityFetch<SanityProject[]>(
+    '*[_type == "project"]{ slug }',
+  );
+  return projects.map((p) => ({ slug: p.slug.current }));
 }
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await props.params;
-  const project = getProject(slug);
+  const project = await sanityFetch<SanityProject | null>(
+    '*[_type == "project" && slug.current == $slug][0]',
+    { slug },
+  );
   if (!project) return {};
   return {
     title: `${project.title} — Timotion Studio`,
-    description: project.tagline,
+    description: project.shortDescription,
   };
 }
 
@@ -25,10 +69,23 @@ export default async function ProjectPage(props: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await props.params;
-  const project = getProject(slug);
+  const project = await sanityFetch<SanityProject | null>(
+    '*[_type == "project" && slug.current == $slug][0]',
+    { slug },
+  );
   if (!project) notFound();
 
-  const { prev, next } = getAdjacentProjects(slug);
+  const allProjects = await sanityFetch<SanityProject[]>(
+    '*[_type == "project"] | order(featuredOrder asc)',
+  );
+  const idx = allProjects.findIndex((p) => p.slug.current === slug);
+  const prev = idx > 0 ? allProjects[idx - 1] : null;
+  const next = idx < allProjects.length - 1 ? allProjects[idx + 1] : null;
+
+  const [scope, process, result] = extractSections(project.longDescription);
+  const category = project.category
+    ? project.category.charAt(0).toUpperCase() + project.category.slice(1)
+    : "";
 
   return (
     <div className="bg-[#000021] min-h-screen">
@@ -45,7 +102,7 @@ export default async function ProjectPage(props: {
             <div className="shrink-0 w-52">
               {prev ? (
                 <Link
-                  href={`/projects/${prev.slug}`}
+                  href={`/projects/${prev.slug.current}`}
                   className="group flex flex-col gap-3 hover:bg-white/[0.02] transition-colors duration-300 p-4 -m-4"
                 >
                   <span className="text-xs tracking-widest uppercase text-white/60 group-hover:text-[#ff7bac] transition-colors duration-300">
@@ -78,7 +135,7 @@ export default async function ProjectPage(props: {
                     <div
                       key={i}
                       className={`${i === 0 ? "col-span-2 row-span-2" : ""}`}
-                      style={{ aspectRatio: i === 0 ? "16/9" : "4/3", background: `linear-gradient(${135 + i * 20}deg, ${project.bg1}, ${project.bg2})`, position: "relative", overflow: "hidden" }}
+                      style={{ aspectRatio: i === 0 ? "16/9" : "4/3", background: `linear-gradient(${135 + i * 20}deg, #1a1a3e, #000021)`, position: "relative", overflow: "hidden" }}
                     >
                       <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.05) 3px, rgba(255,255,255,0.05) 4px)" }} />
                       {i === 0 && <div className="absolute inset-0 flex items-center justify-center"><span className="text-white/20 text-[10px] tracking-widest uppercase">Photo Gallery</span></div>}
@@ -92,7 +149,7 @@ export default async function ProjectPage(props: {
             <div className="shrink-0 w-52">
               {next ? (
                 <Link
-                  href={`/projects/${next.slug}`}
+                  href={`/projects/${next.slug.current}`}
                   className="group flex flex-col gap-3 items-end text-right hover:bg-white/[0.02] transition-colors duration-300 p-4 -m-4"
                 >
                   <span className="text-xs tracking-widest uppercase text-white/60 group-hover:text-[#ff7bac] transition-colors duration-300">
@@ -124,7 +181,7 @@ export default async function ProjectPage(props: {
             ) : (
               <div className="grid grid-cols-3 gap-1.5">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className={`${i === 0 ? "col-span-2 row-span-2" : ""}`} style={{ aspectRatio: i === 0 ? "16/9" : "4/3", background: `linear-gradient(${135 + i * 20}deg, ${project.bg1}, ${project.bg2})`, position: "relative", overflow: "hidden" }}>
+                  <div key={i} className={`${i === 0 ? "col-span-2 row-span-2" : ""}`} style={{ aspectRatio: i === 0 ? "16/9" : "4/3", background: `linear-gradient(${135 + i * 20}deg, #1a1a3e, #000021)`, position: "relative", overflow: "hidden" }}>
                     <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.05) 3px, rgba(255,255,255,0.05) 4px)" }} />
                     {i === 0 && <div className="absolute inset-0 flex items-center justify-center"><span className="text-white/20 text-[10px] tracking-widest uppercase">Photo Gallery</span></div>}
                   </div>
@@ -140,19 +197,19 @@ export default async function ProjectPage(props: {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
               <p className="text-[#ff7bac] text-sm tracking-[0.3em] uppercase mb-3">
-                {project.category}
+                {category}
               </p>
               <h1 className="font-[family-name:var(--font-playfair)] text-5xl md:text-7xl font-bold text-[#ff7bac] leading-[1.15] tracking-wide capitalize">
                 {project.title}
               </h1>
               <p className="text-white/50 text-lg mt-3 font-[family-name:var(--font-playfair)] italic">
-                {project.tagline}
+                {project.shortDescription}
               </p>
             </div>
             <div className="flex gap-8 md:text-right shrink-0">
               <div>
                 <p className="text-[9px] tracking-widest uppercase text-white/60 mb-1">Client</p>
-                <p className="text-white text-sm">{project.client}</p>
+                <p className="text-white text-sm">{project.clientName}</p>
               </div>
               <div>
                 <p className="text-[9px] tracking-widest uppercase text-white/60 mb-1">Year</p>
@@ -168,77 +225,59 @@ export default async function ProjectPage(props: {
         <div className="max-w-3xl mx-auto space-y-20">
 
           {/* Scope */}
-          <div className="animate-fade-in-up">
-            <div className="flex items-center gap-4 mb-8">
-              <span className="text-[#ff7bac] text-[9px] tracking-[0.4em] uppercase">
-                01
-              </span>
-              <span className="text-[9px] tracking-[0.4em] uppercase text-white/60">
-                Project Scope
-              </span>
-              <div className="flex-1 h-px bg-white/[0.07]" />
-            </div>
-            <p className="text-[#c8c8d8] text-lg leading-[1.9] font-light">
-              {project.scope}
-            </p>
-          </div>
-
-          {/* Process */}
-          <div>
-            <div className="flex items-center gap-4 mb-8">
-              <span className="text-[#ff7bac] text-[9px] tracking-[0.4em] uppercase">
-                02
-              </span>
-              <span className="text-[9px] tracking-[0.4em] uppercase text-white/60">
-                The Process
-              </span>
-              <div className="flex-1 h-px bg-white/[0.07]" />
-            </div>
-            <p className="text-[#c8c8d8] text-lg leading-[1.9] font-light">
-              {project.process}
-            </p>
-          </div>
-
-          {/* Result */}
-          <div>
-            <div className="flex items-center gap-4 mb-8">
-              <span className="text-[#ff7bac] text-[9px] tracking-[0.4em] uppercase">
-                03
-              </span>
-              <span className="text-[9px] tracking-[0.4em] uppercase text-white/60">
-                The Result
-              </span>
-              <div className="flex-1 h-px bg-white/[0.07]" />
-            </div>
-            <p className="text-[#c8c8d8] text-lg leading-[1.9] font-light">
-              {project.result}
-            </p>
-          </div>
-
-          {/* Testimonial */}
-          {project.testimonial && (
-            <div className="bg-[#00002e] border border-white/[0.06] p-10 md:p-14">
-              <svg
-                className="w-8 h-8 mb-6"
-                fill="#ff7bac"
-                opacity={0.35}
-                viewBox="0 0 24 24"
-              >
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-              <blockquote className="font-[family-name:var(--font-playfair)] text-2xl md:text-3xl italic text-white leading-relaxed mb-8">
-                &ldquo;{project.testimonial.quote}&rdquo;
-              </blockquote>
-              <div className="border-t border-white/[0.08] pt-6">
-                <p className="text-[#ff7bac] text-[10px] tracking-widest uppercase font-semibold">
-                  {project.testimonial.author}
-                </p>
-                <p className="text-white/60 text-[10px] tracking-widest uppercase mt-1">
-                  {project.testimonial.role}
-                </p>
+          {scope && (
+            <div className="animate-fade-in-up">
+              <div className="flex items-center gap-4 mb-8">
+                <span className="text-[#ff7bac] text-[9px] tracking-[0.4em] uppercase">
+                  01
+                </span>
+                <span className="text-[9px] tracking-[0.4em] uppercase text-white/60">
+                  Project Scope
+                </span>
+                <div className="flex-1 h-px bg-white/[0.07]" />
               </div>
+              <p className="text-[#c8c8d8] text-lg leading-[1.9] font-light">
+                {scope}
+              </p>
             </div>
           )}
+
+          {/* Process */}
+          {process && (
+            <div>
+              <div className="flex items-center gap-4 mb-8">
+                <span className="text-[#ff7bac] text-[9px] tracking-[0.4em] uppercase">
+                  02
+                </span>
+                <span className="text-[9px] tracking-[0.4em] uppercase text-white/60">
+                  The Process
+                </span>
+                <div className="flex-1 h-px bg-white/[0.07]" />
+              </div>
+              <p className="text-[#c8c8d8] text-lg leading-[1.9] font-light">
+                {process}
+              </p>
+            </div>
+          )}
+
+          {/* Result */}
+          {result && (
+            <div>
+              <div className="flex items-center gap-4 mb-8">
+                <span className="text-[#ff7bac] text-[9px] tracking-[0.4em] uppercase">
+                  03
+                </span>
+                <span className="text-[9px] tracking-[0.4em] uppercase text-white/60">
+                  The Result
+                </span>
+                <div className="flex-1 h-px bg-white/[0.07]" />
+              </div>
+              <p className="text-[#c8c8d8] text-lg leading-[1.9] font-light">
+                {result}
+              </p>
+            </div>
+          )}
+
         </div>
       </section>
 

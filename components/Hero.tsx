@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useCallback } from "react";
 
-export default function Hero() {
+export default function Hero({ posterUrl, videoUrl }: { posterUrl?: string; videoUrl?: string }) {
   const sectionRef  = useRef<HTMLElement>(null);
   const bgRef       = useRef<HTMLVideoElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -64,11 +64,11 @@ export default function Hero() {
         muted
         loop
         playsInline
-        poster="/hero-poster.png"
+        poster={posterUrl ?? "/hero-loop.jpg"}
         className="hero-bg absolute inset-0 w-full h-full object-cover"
         style={{ zIndex: 0 }}
       >
-        <source src="/hero-loop.mp4" type="video/mp4" />
+        <source src={videoUrl ?? "/hero-loop.mp4"} type="video/mp4" />
       </video>
 
       {/* ── Overlays ── */}

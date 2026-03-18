@@ -3,22 +3,12 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import type { SanityProject } from "@/sanity/types";
+import { urlFor } from "@/sanity/image";
 
-const LEFT = [
-  { slug: "iberoafrican",      title: "ibero\nafrican",      category: "FASHION | FILM",  src: "/iberoafrican-thumb.jpg",      w: 1080, h: 720  },
-  { slug: "sun-wine-laughter", title: "sun wine\nlaughter",  category: "WEDDING | FILM",  src: "/sun-wine-laughter-thumb.jpg", w: 1920, h: 1080 },
-  { slug: "power-of-one-team", title: "power of\none team", category: "EVENT | PHOTO",   src: "/power-of-one-team-thumb.jpg", w: 1200, h: 800  },
-  { slug: "the-gift",          title: "the\ngift",           category: "SHORT | FILM",    src: "/the-gift-thumb.jpg",          w: 1920, h: 1080 },
-];
-
-const RIGHT = [
-  { slug: "concrete-desert",   title: "concrete\ndesert",   category: "FASHION | PHOTO", src: "/concrete-desert-thumb.webp",  w: 900,  h: 1200 },
-  { slug: "the-kraken",        title: "the\nkraken",        category: "EVENT | FILM",    src: "/kraken-thumb.jpg",            w: 1920, h: 1080 },
-];
-
-function Card({ slug, title, category, src, w, h }: {
+function Card({ slug, title, category, imageSrc }: {
   slug: string; title: string; category: string;
-  src: string; w: number; h: number;
+  imageSrc: string | null;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const imgRef     = useRef<HTMLDivElement>(null);
@@ -100,13 +90,17 @@ function Card({ slug, title, category, src, w, h }: {
             position: "relative",
           }}
         >
-          <Image
-            src={src}
-            alt={title}
-            width={w}
-            height={h}
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
+          {imageSrc ? (
+            <Image
+              src={imageSrc}
+              alt={title}
+              width={1200}
+              height={800}
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
+          ) : (
+            <div style={{ width: "100%", aspectRatio: "3/2", background: "linear-gradient(135deg, #1a1a3e, #000021)" }} />
+          )}
         </div>
       </Link>
 
@@ -159,7 +153,11 @@ function Card({ slug, title, category, src, w, h }: {
   );
 }
 
-export default function ProjectsGrid() {
+export default function ProjectsGrid({ projects }: { projects: SanityProject[] }) {
+  const leftCount = Math.ceil(projects.length * 2 / 3);
+  const left = projects.slice(0, leftCount);
+  const right = projects.slice(leftCount);
+
   return (
     <section
       id="projects"
@@ -191,7 +189,15 @@ export default function ProjectsGrid() {
             gap: "5rem",
           }}
         >
-          {LEFT.map((p) => <Card key={p.slug} {...p} />)}
+          {left.map((p) => (
+            <Card
+              key={p._id}
+              slug={p.slug.current}
+              title={p.title}
+              category={p.category?.toUpperCase() ?? ""}
+              imageSrc={p.coverImage ? urlFor(p.coverImage).width(1200).height(800).url() : null}
+            />
+          ))}
         </div>
 
         {/* Right column — 55%, overflow visible so images are never clipped */}
@@ -206,7 +212,15 @@ export default function ProjectsGrid() {
             gap: "5rem",
           }}
         >
-          {RIGHT.map((p) => <Card key={p.slug} {...p} />)}
+          {right.map((p) => (
+            <Card
+              key={p._id}
+              slug={p.slug.current}
+              title={p.title}
+              category={p.category?.toUpperCase() ?? ""}
+              imageSrc={p.coverImage ? urlFor(p.coverImage).width(1200).height(800).url() : null}
+            />
+          ))}
         </div>
       </div>
     </section>
