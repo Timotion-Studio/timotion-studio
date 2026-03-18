@@ -57,8 +57,7 @@ export default function Testimonials({ testimonials }: { testimonials: SanityTes
             <div
               key={t._id}
               ref={(el) => setCardRef(el, i)}
-              className="border-t border-white/10 pt-12 px-10 pb-10 flex flex-col justify-between"
-              style={{ minHeight: "280px", opacity: 0, transform: "translateY(20px)" }}
+              className="border-t border-white/10 pt-12 px-10 pb-10 flex flex-col justify-between min-h-[280px] testimonial-hidden"
             >
               <div>
                 <QuoteIcon />
