@@ -72,7 +72,12 @@ export async function POST(req: NextRequest) {
       budget,
       urgency,
       referral,
+      website,
     } = body;
+
+    if (website) {
+      return NextResponse.json({ success: true });
+    }
 
     if (!name || !email) {
       return NextResponse.json({ error: "Missing required fields." }, { status: 400 });

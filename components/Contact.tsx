@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e?: React.SyntheticEvent) => {
     e?.preventDefault();
@@ -16,7 +17,7 @@ export default function Contact() {
       const res = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: form.name, email: form.email, description: form.message }),
+        body: JSON.stringify({ name: form.name, email: form.email, description: form.message, website: honeypotRef.current?.value }),
       });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
@@ -56,6 +57,7 @@ export default function Contact() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-5 text-left">
+            <input type="text" name="website" ref={honeypotRef} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: "none" }} />
             <div>
               <label htmlFor="name" className="sr-only">Name</label>
               <input
