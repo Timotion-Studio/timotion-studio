@@ -7,6 +7,7 @@ import { urlFor } from "@/sanity/image";
 import type { SanityProject } from "@/sanity/types";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import PhotoGallery from "@/components/PhotoGallery";
 
 type SanityProjectWithPhotos = Omit<SanityProject, 'photos'> & {
   photos?: Array<{ _key: string; asset: { url: string }; alt?: string }>;
@@ -136,19 +137,13 @@ export default async function ProjectPage(props: {
                   />
                 </div>
               ) : project.photos?.length ? (
-                <div className="space-y-6">
-                  {project.photos.map((photo) => (
-                    <Image
-                      key={photo._key}
-                      src={urlFor(photo).width(1600).quality(85).auto("format").url()}
-                      alt={photo.alt ?? project.title}
-                      width={1600}
-                      height={1067}
-                      sizes="(max-width: 768px) 100vw, 70vw"
-                      className="w-full h-auto"
-                    />
-                  ))}
-                </div>
+                <PhotoGallery
+                  photos={project.photos.map((photo) => ({
+                    _key: photo._key,
+                    url: urlFor(photo).width(800).quality(85).auto("format").url(),
+                    alt: photo.alt ?? project.title,
+                  }))}
+                />
               ) : null}
             </div>
 
@@ -186,19 +181,13 @@ export default async function ProjectPage(props: {
                 />
               </div>
             ) : project.photos?.length ? (
-              <div className="space-y-4">
-                {project.photos.map((photo) => (
-                  <Image
-                    key={photo._key}
-                    src={urlFor(photo).width(1200).quality(85).auto("format").url()}
-                    alt={photo.alt ?? project.title}
-                    width={1200}
-                    height={800}
-                    sizes="100vw"
-                    className="w-full h-auto"
-                  />
-                ))}
-              </div>
+              <PhotoGallery
+                photos={project.photos.map((photo) => ({
+                  _key: photo._key,
+                  url: urlFor(photo).width(800).quality(85).auto("format").url(),
+                  alt: photo.alt ?? project.title,
+                }))}
+              />
             ) : null}
           </div>
 
