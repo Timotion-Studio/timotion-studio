@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const TOTAL_STEPS = 4;
 
@@ -129,6 +129,7 @@ export default function QualificationForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [animKey, setAnimKey] = useState(0);
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const goTo = (next: number) => {
     setAnimKey((k) => k + 1);
@@ -153,7 +154,7 @@ export default function QualificationForm() {
       const res = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, website: honeypotRef.current?.value }),
       });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
@@ -249,6 +250,8 @@ export default function QualificationForm() {
                 />
               </div>
             </div>
+
+            <input type="text" name="website" ref={honeypotRef} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: "none" }} />
 
             {/* Steps */}
             <div key={animKey} className="animate-fade-in-up">
