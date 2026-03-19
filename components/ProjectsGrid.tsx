@@ -6,9 +6,9 @@ import Link from "next/link";
 import type { SanityProject } from "@/sanity/types";
 import { urlFor } from "@/sanity/image";
 
-function Card({ slug, title, category, imageSrc }: {
+function Card({ slug, title, category, imageSrc, isFilm }: {
   slug: string; title: string; category: string;
-  imageSrc: string | null;
+  imageSrc: string | null; isFilm: boolean;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const imgRef     = useRef<HTMLDivElement>(null);
@@ -94,12 +94,12 @@ function Card({ slug, title, category, imageSrc }: {
             <Image
               src={imageSrc}
               alt={title}
-              width={1200}
-              height={800}
+              width={isFilm ? 1600 : 800}
+              height={isFilm ? 900 : 1067}
               style={{ width: "100%", height: "auto", display: "block" }}
             />
           ) : (
-            <div style={{ width: "100%", aspectRatio: "3/2", background: "linear-gradient(135deg, #1a1a3e, #000021)" }} />
+            <div style={{ width: "100%", aspectRatio: isFilm ? "16/9" : "3/4", background: "linear-gradient(135deg, #1a1a3e, #000021)" }} />
           )}
         </div>
       </Link>
@@ -195,7 +195,8 @@ export default function ProjectsGrid({ projects }: { projects: SanityProject[] }
               slug={p.slug.current}
               title={p.title}
               category={p.category?.toUpperCase() ?? ""}
-              imageSrc={p.coverImage ? urlFor(p.coverImage).width(1200).height(800).url() : null}
+              isFilm={!!p.vimeoId}
+              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 900 : 1067).url() : null}
             />
           ))}
         </div>
@@ -218,7 +219,8 @@ export default function ProjectsGrid({ projects }: { projects: SanityProject[] }
               slug={p.slug.current}
               title={p.title}
               category={p.category?.toUpperCase() ?? ""}
-              imageSrc={p.coverImage ? urlFor(p.coverImage).width(1200).height(800).url() : null}
+              isFilm={!!p.vimeoId}
+              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 900 : 1067).url() : null}
             />
           ))}
         </div>
