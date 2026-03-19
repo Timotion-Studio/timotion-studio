@@ -95,11 +95,11 @@ function Card({ slug, title, category, imageSrc, isFilm }: {
               src={imageSrc}
               alt={title}
               width={isFilm ? 1600 : 800}
-              height={isFilm ? 900 : 1067}
+              height={isFilm ? 669 : 1067}
               style={{ width: "100%", height: "auto", display: "block" }}
             />
           ) : (
-            <div style={{ width: "100%", aspectRatio: isFilm ? "16/9" : "3/4", background: "linear-gradient(135deg, #1a1a3e, #000021)" }} />
+            <div style={{ width: "100%", aspectRatio: isFilm ? "239/100" : "3/4", background: "linear-gradient(135deg, #1a1a3e, #000021)" }} />
           )}
         </div>
       </Link>
@@ -196,7 +196,7 @@ export default function ProjectsGrid({ projects }: { projects: SanityProject[] }
               title={p.title}
               category={p.category?.toUpperCase() ?? ""}
               isFilm={!!p.vimeoId}
-              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 900 : 1067).url() : null}
+              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 669 : 1067).url() : null}
             />
           ))}
         </div>
@@ -220,7 +220,7 @@ export default function ProjectsGrid({ projects }: { projects: SanityProject[] }
               title={p.title}
               category={p.category?.toUpperCase() ?? ""}
               isFilm={!!p.vimeoId}
-              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 900 : 1067).url() : null}
+              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 669 : 1067).url() : null}
             />
           ))}
         </div>
