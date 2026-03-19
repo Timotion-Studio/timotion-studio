@@ -6,9 +6,9 @@ import Link from "next/link";
 import type { SanityProject } from "@/sanity/types";
 import { urlFor } from "@/sanity/image";
 
-function Card({ slug, title, category, imageSrc, isFilm }: {
+function Card({ slug, title, category, imageSrc, imgW, imgH }: {
   slug: string; title: string; category: string;
-  imageSrc: string | null; isFilm: boolean;
+  imageSrc: string | null; imgW: number; imgH: number;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const imgRef     = useRef<HTMLDivElement>(null);
@@ -94,12 +94,13 @@ function Card({ slug, title, category, imageSrc, isFilm }: {
             <Image
               src={imageSrc}
               alt={title}
-              width={isFilm ? 1600 : 800}
-              height={isFilm ? 800 : 1067}
+              width={imgW}
+              height={imgH}
+              sizes="(max-width: 767px) 100vw, 50vw"
               style={{ width: "100%", height: "auto", display: "block" }}
             />
           ) : (
-            <div style={{ width: "100%", aspectRatio: isFilm ? "2/1" : "3/4", background: "linear-gradient(135deg, #1a1a3e, #000021)" }} />
+            <div style={{ width: "100%", aspectRatio: `${imgW}/${imgH}`, background: "linear-gradient(135deg, #1a1a3e, #000021)" }} />
           )}
         </div>
       </Link>
@@ -154,9 +155,30 @@ function Card({ slug, title, category, imageSrc, isFilm }: {
 }
 
 export default function ProjectsGrid({ projects }: { projects: SanityProject[] }) {
-  const leftCount = Math.ceil(projects.length * 2 / 3);
-  const left = projects.slice(0, leftCount);
-  const right = projects.slice(leftCount);
+  const left: SanityProject[] = [];
+  const right: SanityProject[] = [];
+  projects.forEach((p, i) => (i % 2 === 0 ? left : right).push(p));
+
+  function getFallbackDimensions(p: SanityProject): { w: number; h: number } {
+    const cat = p.category;
+    if (cat === "fashion") return { w: 800, h: 1000 };
+    return { w: 800, h: 450 };
+  }
+
+  function renderCard(p: SanityProject) {
+    const fb = getFallbackDimensions(p);
+    return (
+      <Card
+        key={p._id}
+        slug={p.slug.current}
+        title={p.title}
+        category={p.category?.toUpperCase() ?? ""}
+        imgW={fb.w}
+        imgH={fb.h}
+        imageSrc={p.coverImage ? urlFor(p.coverImage).auto("format").url() : null}
+      />
+    );
+  }
 
   return (
     <section
@@ -177,53 +199,40 @@ export default function ProjectsGrid({ projects }: { projects: SanityProject[] }
       <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl text-[#ff7bac] text-center font-bold leading-[1.2] tracking-wide mb-16">
         Selected Projects
       </h2>
-      <div className="projects-grid-outer" style={{ display: "flex", alignItems: "flex-start", gap: "6rem" }}>
-        {/* Left column — 45% */}
+
+      {/* Desktop: two balanced columns */}
+      <div className="hidden md:flex gap-4 w-full" style={{ alignItems: "flex-start", gap: "6rem" }}>
         <div
           className="projects-grid-left"
           style={{
-            width: "45%",
+            width: "50%",
             flexShrink: 0,
             display: "flex",
             flexDirection: "column",
             gap: "5rem",
+            overflow: "visible",
           }}
         >
-          {left.map((p) => (
-            <Card
-              key={p._id}
-              slug={p.slug.current}
-              title={p.title}
-              category={p.category?.toUpperCase() ?? ""}
-              isFilm={!!p.vimeoId}
-              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 800 : 1067).auto('format').url() : null}
-            />
-          ))}
+          {left.map(renderCard)}
         </div>
-
-        {/* Right column — 55%, overflow visible so images are never clipped */}
         <div
           className="projects-grid-right"
           style={{
-            width: "55%",
+            width: "50%",
             flexShrink: 0,
-            overflow: "visible",
             display: "flex",
             flexDirection: "column",
             gap: "5rem",
+            overflow: "visible",
           }}
         >
-          {right.map((p) => (
-            <Card
-              key={p._id}
-              slug={p.slug.current}
-              title={p.title}
-              category={p.category?.toUpperCase() ?? ""}
-              isFilm={!!p.vimeoId}
-              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 800 : 1067).auto('format').url() : null}
-            />
-          ))}
+          {right.map(renderCard)}
         </div>
+      </div>
+
+      {/* Mobile: single column in original order */}
+      <div className="flex flex-col gap-4 md:hidden">
+        {projects.map(renderCard)}
       </div>
     </section>
   );
