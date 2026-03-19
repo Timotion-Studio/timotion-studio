@@ -20,6 +20,7 @@ export interface SanityProject {
   year?: number
   tags?: string[]
   featuredOrder?: number
+  photos?: Array<{ _key: string; asset: { _ref: string }; alt?: string }>
 }
 
 export interface SanityTestimonial {

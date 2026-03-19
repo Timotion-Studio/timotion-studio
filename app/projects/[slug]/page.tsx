@@ -1,10 +1,16 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { sanityFetch } from "@/sanity/client";
+import { urlFor } from "@/sanity/image";
 import type { SanityProject } from "@/sanity/types";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+
+type SanityProjectWithPhotos = Omit<SanityProject, 'photos'> & {
+  photos?: Array<{ _key: string; asset: { url: string }; alt?: string }>;
+};
 
 function extractBlockText(block: { _type: string; children?: unknown[] }): string {
   if (block._type === "block" && Array.isArray(block.children)) {
@@ -54,8 +60,8 @@ export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await props.params;
-  const project = await sanityFetch<SanityProject | null>(
-    '*[_type == "project" && slug.current == $slug][0]',
+  const project = await sanityFetch<SanityProjectWithPhotos | null>(
+    '*[_type == "project" && slug.current == $slug][0]{ ..., photos[]{ _key, asset->{ url }, alt } }',
     { slug },
   );
   if (!project) return {};
@@ -69,8 +75,8 @@ export default async function ProjectPage(props: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await props.params;
-  const project = await sanityFetch<SanityProject | null>(
-    '*[_type == "project" && slug.current == $slug][0]',
+  const project = await sanityFetch<SanityProjectWithPhotos | null>(
+    '*[_type == "project" && slug.current == $slug][0]{ ..., photos[]{ _key, asset->{ url }, alt } }',
     { slug },
   );
   if (!project) notFound();
@@ -118,7 +124,7 @@ export default async function ProjectPage(props: {
               ) : <div />}
             </div>
 
-            {/* Video */}
+            {/* Video or Photo Gallery */}
             <div className="flex-1 min-w-0">
               {project.vimeoId ? (
                 <div className="w-full relative" style={{ paddingBottom: "56.25%" }}>
@@ -129,20 +135,21 @@ export default async function ProjectPage(props: {
                     style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
                   />
                 </div>
-              ) : (
-                <div className="grid grid-cols-3 gap-1.5">
-                  {[...Array(6)].map((_, i) => (
-                    <div
-                      key={i}
-                      className={`${i === 0 ? "col-span-2 row-span-2" : ""}`}
-                      style={{ aspectRatio: i === 0 ? "16/9" : "4/3", background: `linear-gradient(${135 + i * 20}deg, #1a1a3e, #000021)`, position: "relative", overflow: "hidden" }}
-                    >
-                      <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.05) 3px, rgba(255,255,255,0.05) 4px)" }} />
-                      {i === 0 && <div className="absolute inset-0 flex items-center justify-center"><span className="text-white/20 text-[10px] tracking-widest uppercase">Photo Gallery</span></div>}
-                    </div>
+              ) : project.photos?.length ? (
+                <div className="space-y-6">
+                  {project.photos.map((photo) => (
+                    <Image
+                      key={photo._key}
+                      src={urlFor(photo).width(1600).quality(85).auto("format").url()}
+                      alt={photo.alt ?? project.title}
+                      width={1600}
+                      height={1067}
+                      sizes="(max-width: 768px) 100vw, 70vw"
+                      className="w-full h-auto"
+                    />
                   ))}
                 </div>
-              )}
+              ) : null}
             </div>
 
             {/* Next */}
@@ -167,7 +174,7 @@ export default async function ProjectPage(props: {
 
           </div>
 
-          {/* ── Mobile: video full-width ── */}
+          {/* ── Mobile: video or photo gallery full-width ── */}
           <div className="md:hidden">
             {project.vimeoId ? (
               <div className="w-full relative" style={{ paddingBottom: "56.25%" }}>
@@ -178,16 +185,21 @@ export default async function ProjectPage(props: {
                   style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
                 />
               </div>
-            ) : (
-              <div className="grid grid-cols-3 gap-1.5">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className={`${i === 0 ? "col-span-2 row-span-2" : ""}`} style={{ aspectRatio: i === 0 ? "16/9" : "4/3", background: `linear-gradient(${135 + i * 20}deg, #1a1a3e, #000021)`, position: "relative", overflow: "hidden" }}>
-                    <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.05) 3px, rgba(255,255,255,0.05) 4px)" }} />
-                    {i === 0 && <div className="absolute inset-0 flex items-center justify-center"><span className="text-white/20 text-[10px] tracking-widest uppercase">Photo Gallery</span></div>}
-                  </div>
+            ) : project.photos?.length ? (
+              <div className="space-y-4">
+                {project.photos.map((photo) => (
+                  <Image
+                    key={photo._key}
+                    src={urlFor(photo).width(1200).quality(85).auto("format").url()}
+                    alt={photo.alt ?? project.title}
+                    width={1200}
+                    height={800}
+                    sizes="100vw"
+                    className="w-full h-auto"
+                  />
                 ))}
               </div>
-            )}
+            ) : null}
           </div>
 
         </div>

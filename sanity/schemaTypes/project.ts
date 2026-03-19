@@ -77,6 +77,24 @@ export default defineType({
       of: [{ type: 'string' }],
     }),
     defineField({
+      name: 'photos',
+      title: 'Photos',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: 'alt',
+              type: 'string',
+              title: 'Alt text',
+            }),
+          ],
+        },
+      ],
+    }),
+    defineField({
       name: 'featuredOrder',
       title: 'Featured Order',
       description: 'Controls homepage grid position. Leave blank if not featured.',
