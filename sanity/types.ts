@@ -4,6 +4,7 @@ export interface SanityImage {
   _type: 'image'
   asset: { _ref: string }
   alt?: string
+  hotspot?: { x: number; y: number; width: number; height: number }
 }
 
 export interface SanityProject {

@@ -196,7 +196,7 @@ export default function ProjectsGrid({ projects }: { projects: SanityProject[] }
               title={p.title}
               category={p.category?.toUpperCase() ?? ""}
               isFilm={!!p.vimeoId}
-              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 800 : 1067).url() : null}
+              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 800 : 1067).auto('format').url() : null}
             />
           ))}
         </div>
@@ -220,7 +220,7 @@ export default function ProjectsGrid({ projects }: { projects: SanityProject[] }
               title={p.title}
               category={p.category?.toUpperCase() ?? ""}
               isFilm={!!p.vimeoId}
-              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 800 : 1067).url() : null}
+              imageSrc={p.coverImage ? urlFor(p.coverImage).width(p.vimeoId ? 1600 : 800).height(p.vimeoId ? 800 : 1067).auto('format').url() : null}
             />
           ))}
         </div>
