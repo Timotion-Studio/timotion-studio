@@ -73,9 +73,14 @@ export async function POST(req: NextRequest) {
       urgency,
       referral,
       website,
+      formLoadTime,
     } = body;
 
     if (website) {
+      return NextResponse.json({ success: true });
+    }
+
+    if (formLoadTime && Date.now() - Number(formLoadTime) < 3000) {
       return NextResponse.json({ success: true });
     }
 

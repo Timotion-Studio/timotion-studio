@@ -130,6 +130,7 @@ export default function QualificationForm() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [animKey, setAnimKey] = useState(0);
   const honeypotRef = useRef<HTMLInputElement>(null);
+  const formLoadTime = useRef<number>(Date.now());
 
   const goTo = (next: number) => {
     setAnimKey((k) => k + 1);
@@ -154,7 +155,7 @@ export default function QualificationForm() {
       const res = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, website: honeypotRef.current?.value }),
+        body: JSON.stringify({ ...data, website: honeypotRef.current?.value, formLoadTime: formLoadTime.current }),
       });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
