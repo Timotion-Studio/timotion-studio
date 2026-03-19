@@ -30,17 +30,16 @@ export default function PhotoGallery({ photos }: { photos: Photo[] }) {
 
   return (
     <>
-      {/* Masonry grid */}
-      <div
-        style={{
-          columnCount: 3,
-          columnGap: "8px",
-        }}
-        className="masonry-grid"
-      >
+      {/* Photo grid */}
+      <div className="photo-grid">
         <style>{`
-          @media (max-width: 1023px) { .masonry-grid { column-count: 2 !important; } }
-          @media (max-width: 639px)  { .masonry-grid { column-count: 1 !important; } }
+          .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+          }
+          @media (max-width: 1023px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
+          @media (max-width: 639px)  { .photo-grid { grid-template-columns: 1fr; } }
         `}</style>
         {photos.map((photo, i) => (
           <button
@@ -50,21 +49,21 @@ export default function PhotoGallery({ photos }: { photos: Photo[] }) {
             style={{
               display: "block",
               width: "100%",
-              marginBottom: "8px",
-              breakInside: "avoid",
+              aspectRatio: "3/4",
+              overflow: "hidden",
               cursor: "pointer",
               background: "none",
               border: "none",
               padding: 0,
+              position: "relative",
             }}
           >
             <Image
               src={photo.url}
               alt={photo.alt}
-              width={800}
-              height={800}
+              fill
               sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
-              style={{ width: "100%", height: "auto", display: "block" }}
+              style={{ objectFit: "cover" }}
             />
           </button>
         ))}
