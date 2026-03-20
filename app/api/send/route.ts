@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
+import { tokenStore } from "@/lib/tokenStore";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -73,16 +74,26 @@ export async function POST(req: NextRequest) {
       urgency,
       referral,
       website,
-      formLoadTime,
+      token,
     } = body;
 
     if (website) {
       return NextResponse.json({ success: true });
     }
 
-    if (formLoadTime && Date.now() - Number(formLoadTime) < 3000) {
+    const tokenEntry = tokenStore.get(token);
+    if (!tokenEntry) {
       return NextResponse.json({ success: true });
     }
+    const tokenAge = Date.now() - tokenEntry.createdAt;
+    if (tokenAge < 3000) {
+      return NextResponse.json({ success: true });
+    }
+    if (tokenAge > 30 * 60 * 1000) {
+      tokenStore.delete(token);
+      return NextResponse.json({ success: true });
+    }
+    tokenStore.delete(token);
 
     if (!name || !email) {
       return NextResponse.json({ error: "Missing required fields." }, { status: 400 });

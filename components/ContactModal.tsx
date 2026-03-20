@@ -12,7 +12,11 @@ export default function ContactModal({ isOpen, onClose }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
-  const formLoadTime = useRef<number>(Date.now());
+  const [formToken, setFormToken] = useState<string>('');
+
+  useEffect(() => {
+    fetch('/api/token').then(r => r.json()).then(d => setFormToken(d.token));
+  }, []);
 
   // Close on Escape key
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -48,7 +52,7 @@ export default function ContactModal({ isOpen, onClose }: Props) {
       const res = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: form.name, email: form.email, description: form.message, website: honeypotRef.current?.value, formLoadTime: formLoadTime.current }),
+        body: JSON.stringify({ name: form.name, email: form.email, description: form.message, website: honeypotRef.current?.value, token: formToken }),
       });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));

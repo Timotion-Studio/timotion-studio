@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -8,7 +8,11 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
-  const formLoadTime = useRef<number>(Date.now());
+  const [formToken, setFormToken] = useState<string>('');
+
+  useEffect(() => {
+    fetch('/api/token').then(r => r.json()).then(d => setFormToken(d.token));
+  }, []);
 
   const handleSubmit = async (e?: React.SyntheticEvent) => {
     e?.preventDefault();
@@ -18,7 +22,7 @@ export default function Contact() {
       const res = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: form.name, email: form.email, description: form.message, website: honeypotRef.current?.value, formLoadTime: formLoadTime.current }),
+        body: JSON.stringify({ name: form.name, email: form.email, description: form.message, website: honeypotRef.current?.value, token: formToken }),
       });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
