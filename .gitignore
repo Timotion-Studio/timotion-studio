@@ -43,3 +43,8 @@ next-env.d.ts
 # raw source media (large files, not needed in repo)
 /media/
 .env.local
+public/*.png
+public/*.jpg
+public/*.jpeg
+public/*.webp
+public/*.mp4
