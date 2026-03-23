@@ -94,9 +94,11 @@ export async function POST(req: NextRequest) {
         response: turnstileToken,
       }),
     });
+    const rawText = await turnstileRes.text();
+    console.log("[Turnstile] Raw response:", rawText);
     let turnstileData;
     try {
-      turnstileData = await turnstileRes.json();
+      turnstileData = JSON.parse(rawText);
     } catch {
       return NextResponse.json({ error: "Verification service unavailable. Please try again." }, { status: 502 });
     }
