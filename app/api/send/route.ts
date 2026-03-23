@@ -82,26 +82,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
-    // TEMPORARY: Test Cloudflare siteverify with known test key
-    const testRes = await fetch("https://challenges.cloudflare.com/turnstile/v1/siteverify", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        secret: "1x0000000000000000000000000000000AA",
-        response: "test-token",
-      }),
-      redirect: "follow",
-    });
-    console.log("[Turnstile Test] Status:", testRes.status, "URL:", testRes.url);
-    const testText = await testRes.text();
-    console.log("[Turnstile Test] Body:", testText.slice(0, 300));
-
-    // Verify Cloudflare Turnstile token (temporarily bypassed for httpbin test)
-    /*
+    // Verify Cloudflare Turnstile token
     if (!turnstileToken) {
       return NextResponse.json({ error: "Verification failed. Please try again." }, { status: 400 });
     }
-    const turnstileRes = await fetch("https://challenges.cloudflare.com/turnstile/v1/siteverify", {
+    const turnstileRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
@@ -110,9 +95,7 @@ export async function POST(req: NextRequest) {
       }),
       redirect: "follow",
     });
-    console.log("[Turnstile] Response URL:", turnstileRes.url, "Status:", turnstileRes.status);
     const rawText = await turnstileRes.text();
-    console.log("[Turnstile] Raw response:", rawText);
     let turnstileData;
     try {
       turnstileData = JSON.parse(rawText);
@@ -122,7 +105,6 @@ export async function POST(req: NextRequest) {
     if (!turnstileData.success) {
       return NextResponse.json({ error: "Verification failed. Please try again." }, { status: 400 });
     }
-    */
 
     if (!name || !email) {
       return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
