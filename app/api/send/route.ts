@@ -82,14 +82,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
-    // TEMPORARY: Test outbound POST from Vercel
-    const testRes = await fetch("https://httpbin.org/post", {
+    // TEMPORARY: Test Cloudflare siteverify with known test key
+    const testRes = await fetch("https://challenges.cloudflare.com/turnstile/v1/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ test: "hello" }),
+      body: new URLSearchParams({
+        secret: "1x0000000000000000000000000000000AA",
+        response: "test-token",
+      }),
+      redirect: "follow",
     });
+    console.log("[Turnstile Test] Status:", testRes.status, "URL:", testRes.url);
     const testText = await testRes.text();
-    console.log("[Test] httpbin response:", testRes.status, testText.slice(0, 200));
+    console.log("[Turnstile Test] Body:", testText.slice(0, 300));
 
     // Verify Cloudflare Turnstile token (temporarily bypassed for httpbin test)
     /*
