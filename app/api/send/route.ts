@@ -82,7 +82,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
-    // Verify Cloudflare Turnstile token
+    // TEMPORARY: Test outbound POST from Vercel
+    const testRes = await fetch("https://httpbin.org/post", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ test: "hello" }),
+    });
+    const testText = await testRes.text();
+    console.log("[Test] httpbin response:", testRes.status, testText.slice(0, 200));
+
+    // Verify Cloudflare Turnstile token (temporarily bypassed for httpbin test)
+    /*
     if (!turnstileToken) {
       return NextResponse.json({ error: "Verification failed. Please try again." }, { status: 400 });
     }
@@ -107,6 +117,7 @@ export async function POST(req: NextRequest) {
     if (!turnstileData.success) {
       return NextResponse.json({ error: "Verification failed. Please try again." }, { status: 400 });
     }
+    */
 
     if (!name || !email) {
       return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
