@@ -93,7 +93,9 @@ export async function POST(req: NextRequest) {
         secret: process.env.TURNSTILE_SECRET_KEY ?? "",
         response: turnstileToken,
       }),
+      redirect: "follow",
     });
+    console.log("[Turnstile] Response URL:", turnstileRes.url, "Status:", turnstileRes.status);
     const rawText = await turnstileRes.text();
     console.log("[Turnstile] Raw response:", rawText);
     let turnstileData;
