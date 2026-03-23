@@ -1,6 +1,5 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
-import { tokenStore } from "@/lib/tokenStore";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -76,27 +75,12 @@ export async function POST(req: NextRequest) {
       urgency,
       referral,
       website,
-      token,
       turnstileToken,
     } = body;
 
     if (website) {
       return NextResponse.json({ success: true });
     }
-
-    const tokenEntry = tokenStore.get(token);
-    if (!tokenEntry) {
-      return NextResponse.json({ success: true });
-    }
-    const tokenAge = Date.now() - tokenEntry.createdAt;
-    if (tokenAge < 3000) {
-      return NextResponse.json({ success: true });
-    }
-    if (tokenAge > 30 * 60 * 1000) {
-      tokenStore.delete(token);
-      return NextResponse.json({ success: true });
-    }
-    tokenStore.delete(token);
 
     // Verify Cloudflare Turnstile token
     if (!turnstileToken) {

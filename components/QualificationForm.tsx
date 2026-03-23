@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 const TOTAL_STEPS = 4;
@@ -131,13 +131,8 @@ export default function QualificationForm() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [animKey, setAnimKey] = useState(0);
   const honeypotRef = useRef<HTMLInputElement>(null);
-  const [formToken, setFormToken] = useState<string>('');
   const [turnstileToken, setTurnstileToken] = useState<string>('');
   const turnstileRef = useRef<TurnstileInstance>(null);
-
-  useEffect(() => {
-    fetch('/api/token').then(r => r.json()).then(d => setFormToken(d.token));
-  }, []);
 
   const goTo = (next: number) => {
     setAnimKey((k) => k + 1);
@@ -162,7 +157,7 @@ export default function QualificationForm() {
       const res = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, website: honeypotRef.current?.value, token: formToken, turnstileToken }),
+        body: JSON.stringify({ ...data, website: honeypotRef.current?.value, turnstileToken }),
       });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
