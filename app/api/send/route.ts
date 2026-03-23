@@ -88,13 +88,18 @@ export async function POST(req: NextRequest) {
     }
     const turnstileRes = await fetch("https://challenges.cloudflare.com/turnstile/v1/siteverify", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        secret: process.env.TURNSTILE_SECRET_KEY,
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        secret: process.env.TURNSTILE_SECRET_KEY ?? "",
         response: turnstileToken,
       }),
     });
-    const turnstileData = await turnstileRes.json();
+    let turnstileData;
+    try {
+      turnstileData = await turnstileRes.json();
+    } catch {
+      return NextResponse.json({ error: "Verification service unavailable. Please try again." }, { status: 502 });
+    }
     if (!turnstileData.success) {
       return NextResponse.json({ error: "Verification failed. Please try again." }, { status: 400 });
     }
