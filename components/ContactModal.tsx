@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState, useEffect, useCallback } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 interface Props {
   isOpen: boolean;
@@ -12,6 +13,8 @@ export default function ContactModal({ isOpen, onClose }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
   // Close on Escape key
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -47,7 +50,7 @@ export default function ContactModal({ isOpen, onClose }: Props) {
       const res = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: form.name, email: form.email, description: form.message, website: honeypotRef.current?.value }),
+        body: JSON.stringify({ name: form.name, email: form.email, description: form.message, website: honeypotRef.current?.value, turnstileToken }),
       });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
@@ -56,6 +59,8 @@ export default function ContactModal({ isOpen, onClose }: Props) {
       setSubmitted(true);
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      turnstileRef.current?.reset();
+      setTurnstileToken('');
     } finally {
       setSubmitting(false);
     }
@@ -134,6 +139,13 @@ export default function ContactModal({ isOpen, onClose }: Props) {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               className="w-full bg-[#000021] border border-[#f0f0f0]/10 text-[#f0f0f0] placeholder-[#f0f0f0]/25 px-5 py-3.5 text-sm focus:outline-none focus:border-[#ff7bac] transition-colors resize-none"
+            />
+            <Turnstile
+              ref={turnstileRef}
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+              onSuccess={setTurnstileToken}
+              onExpire={() => setTurnstileToken('')}
+              options={{ size: "invisible" }}
             />
             <button
               type="button"

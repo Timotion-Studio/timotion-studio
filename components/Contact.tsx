@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -8,6 +9,8 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
   const handleSubmit = async (e?: React.SyntheticEvent) => {
     e?.preventDefault();
@@ -17,7 +20,7 @@ export default function Contact() {
       const res = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: form.name, email: form.email, description: form.message, website: honeypotRef.current?.value }),
+        body: JSON.stringify({ name: form.name, email: form.email, description: form.message, website: honeypotRef.current?.value, turnstileToken }),
       });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
@@ -26,6 +29,8 @@ export default function Contact() {
       setSubmitted(true);
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      turnstileRef.current?.reset();
+      setTurnstileToken('');
     } finally {
       setSubmitting(false);
     }
@@ -97,6 +102,13 @@ export default function Contact() {
                 className="w-full bg-[#00002e] border border-[#f0f0f0]/10 text-[#f0f0f0] placeholder-[#f0f0f0]/25 px-6 py-4 text-base focus:outline-none focus:border-[#ff7bac] transition-colors duration-300 resize-none"
               />
             </div>
+            <Turnstile
+              ref={turnstileRef}
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+              onSuccess={setTurnstileToken}
+              onExpire={() => setTurnstileToken('')}
+              options={{ size: "invisible" }}
+            />
             <button
               type="button"
               onClick={handleSubmit}
