@@ -50,6 +50,8 @@ export async function POST(req: NextRequest) {
     "https://timotion.studio",
     "https://www.timotion.studio",
     "https://timotion-studio-timotion-studios-projects.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:3001",
   ];
 
   const origin = req.headers.get("origin") ?? req.headers.get("referer") ?? "";
@@ -75,6 +77,7 @@ export async function POST(req: NextRequest) {
       referral,
       website,
       token,
+      turnstileToken,
     } = body;
 
     if (website) {
@@ -94,6 +97,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true });
     }
     tokenStore.delete(token);
+
+    // Verify Cloudflare Turnstile token
+    if (!turnstileToken) {
+      return NextResponse.json({ error: "Verification failed. Please try again." }, { status: 400 });
+    }
+    const turnstileRes = await fetch("https://challenges.cloudflare.com/turnstile/v1/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        secret: process.env.TURNSTILE_SECRET_KEY,
+        response: turnstileToken,
+      }),
+    });
+    const turnstileData = await turnstileRes.json();
+    if (!turnstileData.success) {
+      return NextResponse.json({ error: "Verification failed. Please try again." }, { status: 400 });
+    }
 
     if (!name || !email) {
       return NextResponse.json({ error: "Missing required fields." }, { status: 400 });

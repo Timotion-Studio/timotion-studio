@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 const TOTAL_STEPS = 4;
 
@@ -131,6 +132,8 @@ export default function QualificationForm() {
   const [animKey, setAnimKey] = useState(0);
   const honeypotRef = useRef<HTMLInputElement>(null);
   const [formToken, setFormToken] = useState<string>('');
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
   useEffect(() => {
     fetch('/api/token').then(r => r.json()).then(d => setFormToken(d.token));
@@ -159,7 +162,7 @@ export default function QualificationForm() {
       const res = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, website: honeypotRef.current?.value, token: formToken }),
+        body: JSON.stringify({ ...data, website: honeypotRef.current?.value, token: formToken, turnstileToken }),
       });
       if (!res.ok) {
         const json = await res.json().catch(() => ({}));
@@ -168,6 +171,8 @@ export default function QualificationForm() {
       setSubmitted(true);
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      turnstileRef.current?.reset();
+      setTurnstileToken('');
     } finally {
       setSubmitting(false);
     }
@@ -458,6 +463,14 @@ export default function QualificationForm() {
                 </div>
               )}
             </div>
+
+            <Turnstile
+              ref={turnstileRef}
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+              onSuccess={setTurnstileToken}
+              onExpire={() => setTurnstileToken('')}
+              options={{ size: "invisible" }}
+            />
 
             {/* Navigation */}
             <div className="flex items-center justify-between mt-10 pt-8 border-t border-white/8">
